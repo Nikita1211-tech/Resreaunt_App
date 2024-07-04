@@ -1,0 +1,15 @@
+<section>
+    <div class="restraunt-list-container" *ngFor="let restraunt of restrauntList | async">
+        <div class="restraunt-container">
+            <img [src]="restraunt.img" alt="">
+            <div class="icon-container">
+                <p>{{ restraunt.name }}</p>
+                <button mat-raised-button matTooltip="Book appointment">
+                    <a [routerLink]="['BookAppointment', restraunt.id]">
+                        <mat-icon svgIcon="book-icon"></mat-icon>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
