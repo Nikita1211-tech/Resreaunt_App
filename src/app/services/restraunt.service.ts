@@ -41,6 +41,7 @@ export class RestrauntService {
   ]
 
   getRestrauntList(): Observable<Restraunt[]> {
+    localStorage.setItem('restrauntList', JSON.stringify(this.restrauntList))
     return of(this.restrauntList);
   }
 }

@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { restrauntReducer } from './store/reducers/restraunt-list-reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { RestrauntEffects } from './store/effects/restraunt-list-effects';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -19,7 +20,9 @@ import { RestrauntEffects } from './store/effects/restraunt-list-effects';
     StoreModule.forRoot({'restraunts' : restrauntReducer}),
     EffectsModule.forRoot([RestrauntEffects])
   ],
-  providers: [],
+  providers: [ 
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

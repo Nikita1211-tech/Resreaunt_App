@@ -6,6 +6,13 @@ export interface Restraunt {
     availableSeats: number;
 }
 
+export interface formData {
+    id: number;
+    tableSize: string;
+    tableLoc: string;
+    date: string;
+}
+
 export interface TableType {
     oneSeaterTable: number;
     twoSeaterTable: number;

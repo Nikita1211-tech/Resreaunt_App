@@ -1,32 +1,40 @@
-/* Section classes starts  */
-
-.book-restraunt-container {
+.container {
+    width: 80%;
+    margin: auto;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
     font-family: "Poppins", sans-serif;
 }
 
-.seats-container {
-    display: flex;
-    gap: 20px;
+img {
+    width: 90%;
+    height: 70vh;
 }
 
-.table-container {
-    display: flex;
-    gap: 20px;
-    width: 20px;
-    height: 20px;
-    background-color: grey;
+/* Section classes starts  */
+.book-restraunt-container {
+    width: 80%;
+    height: 60vh;
+    margin: auto;
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
 }
 
-.seat {
+form {
     display: flex;
-    gap: 20px;
-    width: 20px;
-    height: 20px;
-    background-color: grey;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
 }
 
+button {
+    background: grey;
+    padding: 30px;
+    border-radius: 5px;
+    color: white;
+    font-family: "Poppins", sans-serif;
+}
 
 /* Section classes ends  */
