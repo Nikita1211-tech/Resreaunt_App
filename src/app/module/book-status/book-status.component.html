@@ -1,31 +1,30 @@
 <div class="container">
-    <app-restraunt-preview [id]="id" class="restraunt-common-preview"></app-restraunt-preview>
     <div class="container-row2">
         <h3>Currently booked appointments</h3>
         <div class="appointment">
-            <div *ngFor="let data of currentAppointmentListData" class="appointment-container">
+            <div *ngFor="let list of appointmentList | async" class="appointment-container">
                 <div class="appointment-container-row1">
                     <div>
                         <h6>Appointment</h6>
                     </div>
                     <div class="appointment-actions-container">
-                        <a [routerLink]="['/restraunt/UpdateAppointment', data.restrauntId]"
-                            [queryParams]="{ bookingId: data.id }">
+                        <a [routerLink]="['/restraunt/UpdateAppointment', list.restrauntId]"
+                            [queryParams]="{ bookingId: list.id }">
                             <mat-icon svgIcon="edit-icon" class="edit-icon"></mat-icon>
                         </a>
-                        <button mat-button (click)="deleteAppointment(data.id)">
+                        <button mat-button (click)="deleteAppointment(list.id)">
                             <mat-icon svgIcon="delete-icon" class="delete-icon"></mat-icon>
                         </button>
                     </div>
                 </div>
                 <div class="table-data-conatiner">
                     <div>
-                        <p><span>Table Size:</span> {{ data.tableSize }}</p>
-                        <p><span>Table Location:</span> {{data.tableLoc}}</p>
+                        <p><span>Table Size:</span> {{ list.tableSize }}</p>
+                        <p><span>Table Location:</span> {{list.tableLoc}}</p>
                     </div>
                     <div>
-                        <p><span>Time Slot:</span> {{ data.time }}</p>
-                        <p><span>Date:</span> {{ data.date }}</p>
+                        <p><span>Time Slot:</span> {{ list.time }}</p>
+                        <p><span>Date:</span> {{ list.date }}</p>
                     </div>
                 </div>
             </div>

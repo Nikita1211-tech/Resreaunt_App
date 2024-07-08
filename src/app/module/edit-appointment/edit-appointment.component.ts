@@ -56,7 +56,7 @@ export class EditAppointmentComponent {
 
     this.formData$.subscribe(data => {
       if (data) {
-        const filteredData = data.find(item => item.restrauntId === Number(this.id));
+        const filteredData = data.find(item => item.id === Number(this.bookingId));
         if (filteredData) {
           this.updateRestrauntForm.patchValue({
             tableSize: filteredData.tableSize,

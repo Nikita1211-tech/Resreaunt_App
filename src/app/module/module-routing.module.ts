@@ -15,7 +15,7 @@ const routes: Routes = [
     component: BookRestrauntComponent
   },
   {
-    path: 'BookStatus/:id',
+    path: 'BookStatus',
     component: BookStatusComponent
   },
   {

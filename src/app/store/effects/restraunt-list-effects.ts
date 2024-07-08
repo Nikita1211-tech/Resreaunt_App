@@ -21,27 +21,33 @@ export class RestrauntEffects {
         ))
     ));
 
-    // Loads appointment list
-    loadAppointment$ = createEffect(() => this.action$.pipe(
-        ofType(RestrauntActions.loadBookingAppointment),
-        switchMap(() => this.restrauntService.getAppointmentList().pipe(
-            map((res: formData[]) => RestrauntActions.loadBookingAppointmentSuccess({ appointments: res }))
-        )),
-        catchError((error: { message: string }) => of(
-            RestrauntActions.loadBookingAppointmentFailure({ error: 'Failed to load appointment' })
-        ))
-    ));
-
-    // Adds appointment list
     addAppointment$ = createEffect(() => this.action$.pipe(
         ofType(RestrauntActions.addBookingAppointment),
-        switchMap(({ appointments }) => this.restrauntService.addAppointment(appointments).pipe(
-            map((res: formData[]) => RestrauntActions.addBookingAppointmentSuccess({ appointments: res }))
-        )),
-        catchError((error: { message: string }) => of(
-            RestrauntActions.addBookingAppointmentFailure({ error: 'Failed to add appointment' })
-        ))
-    ));
+        switchMap(({ appointments }) =>
+          this.restrauntService.addAppointment(appointments).pipe(
+            map((addedAppointment: formData[]) =>
+              RestrauntActions.addBookingAppointmentSuccess({ appointments: addedAppointment })
+            ),
+            catchError((error: any) =>
+              of(RestrauntActions.addBookingAppointmentFailure({ error: 'Failed to add appointment' }))
+            )
+          )
+        )
+      ));
+    
+      loadAppointments$ = createEffect(() => this.action$.pipe(
+        ofType(RestrauntActions.loadBookingAppointment),
+        switchMap(() =>
+          this.restrauntService.getAppointmentList().pipe(
+            map((appointments: formData[]) =>
+              RestrauntActions.loadBookingAppointmentSuccess({ appointments })
+            ),
+            catchError((error: any) =>
+              of(RestrauntActions.loadBookingAppointmentFailure({ error: 'Failed to load appointments' }))
+            )
+          )
+        )
+      ));
 
     // Deletes appointment list
     deleteAppointment$ = createEffect(() => this.action$.pipe(

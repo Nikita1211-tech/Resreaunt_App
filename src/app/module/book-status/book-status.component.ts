@@ -39,17 +39,17 @@ export class BookStatusComponent implements OnInit {
     this.appointmentList = this.store.select(RestrauntSelectors.selectAppointments);
 
     // Filter stored data according to id and bookId 
-    this.appointmentList.subscribe(value => {
-      let date = new Date();
-      let updatedDate = this.datePipe.transform(date, 'MM-dd-yyyy');
-      if (updatedDate) {
-        this.transformedDate = updatedDate;
-      }
-      this.appointmentListData = value;
-      this.appointmentListData = this.appointmentListData.filter(value => value.restrauntId === Number(this.id));
-      this.currentAppointmentListData = this.appointmentListData.filter(value => Date.parse(value.date) >= Date.parse(this.transformedDate));
-      this.pastAppointmentListData = this.appointmentListData.filter(value => Date.parse(value.date) < Date.parse(this.transformedDate));
-    });
+    // this.appointmentList.subscribe(value => {
+    //   let date = new Date();
+    //   let updatedDate = this.datePipe.transform(date, 'MM-dd-yyyy');
+    //   if (updatedDate) {
+    //     this.transformedDate = updatedDate;
+    //   }
+    //   this.appointmentListData = value;
+      // this.appointmentListData = this.appointmentListData.filter(value => value.restrauntId === Number(this.id));
+      // this.currentAppointmentListData = this.appointmentListData.filter(value => Date.parse(value.date) >= Date.parse(this.transformedDate));
+      // this.pastAppointmentListData = this.appointmentListData.filter(value => Date.parse(value.date) < Date.parse(this.transformedDate));
+    // });
   }
 
   // Deletes appointment by id

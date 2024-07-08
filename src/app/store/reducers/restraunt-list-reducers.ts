@@ -36,17 +36,33 @@ export const restrauntReducer = createReducer(initialRestrauntState,
 );
 
 // Load, add, delete and update appointment list 
-export const appointmentReducer = createReducer(initialAppointmentState,
-    on(RestrauntActions.addBookingAppointment, RestrauntActions.loadBookingAppointmentSuccess,
-        RestrauntActions.deleteBookedAppointmentSuccess, RestrauntActions.updateBookedAppointmentSuccess,
-        (state, { appointments }) => ({
+export const appointmentReducer = createReducer(
+    initialAppointmentState,
+    on(RestrauntActions.loadBookingAppointmentSuccess, (state, { appointments }) => {
+        console.log('Loading booking appointment success. New state:', { ...state, appointments });
+        return {
             ...state,
-            appointments,
-            error: null
-        })),
-    on(RestrauntActions.loadBookingAppointmentFailure, RestrauntActions.deleteBookedAppointmentFailure,
-        RestrauntActions.updateBookedAppointmentFailure, (state, { error }) => ({
+            appointments
+        };
+    }),
+    on(RestrauntActions.addBookingAppointmentSuccess, (state, { appointments }) => {
+        console.log('Adding booking appointment success. New state:', { ...state, ...appointments });
+        let newAppointment = [...state.appointments, ...appointments];
+        console.log(newAppointment)
+        return {
             ...state,
-            error: error
-        }))
+            appointments: newAppointment
+        };
+    }),
+    on(
+        RestrauntActions.deleteBookedAppointmentSuccess,
+        RestrauntActions.updateBookedAppointmentSuccess,
+        (state, { appointments }) => {
+            console.log('Deleting/updating booked appointment success. New state:', { ...state, appointments });
+            return {
+                ...state,
+                appointments: [...appointments]
+            };
+        }
+    )
 );

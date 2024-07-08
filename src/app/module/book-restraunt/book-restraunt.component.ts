@@ -50,10 +50,9 @@ export class BookRestrauntComponent implements OnInit {
     this.formData$ = this.store.select(RestrauntSelectors.selectAppointments);
 
     // Fetches appointment list 
-    let storedFormData = localStorage.getItem(appointmentListKey);
-    if (storedFormData) {
-      this.storedFormData = JSON.parse(storedFormData);
-    }
+    this.formData$.subscribe((value) => {
+      this.storedFormData = value;
+    })
 
     // Date Validator 
     this.minDate = new Date();
@@ -74,38 +73,39 @@ export class BookRestrauntComponent implements OnInit {
       if (updatedDate) {
         this.date = updatedDate;
       }
-      let newFormData: formData[] = JSON.parse(localStorage.getItem(appointmentListKey) || '[]');
-      let formData: formData = {
-        id: newFormData.length + 1,
+      let formData: formData [] = [] 
+      formData.push({
+        id: this.storedFormData.length + 1,
         restrauntId: Number(this.id),
         tableSize: this.restrauntForm.get('tableSize')?.value,
         tableLoc: this.restrauntForm.get('tableLoc')?.value,
         date: this.date,
         time: this.restrauntForm.get('time')?.value
-      }
-      newFormData.push(formData);
-      if (this.storedFormData.length > 0) {
-        for (let i = 0; i < this.storedFormData.length; i++) {
-          if (this.storedFormData[i].tableSize === formData.tableSize &&
-            this.storedFormData[i].date === formData.date && this.storedFormData[i].time === formData.time) {
-            this.restrauntService.openToastSuccess(NO_APPOINTMENT_AVAILABLE, ACTION);
-            this.alreadyExists = true;
-          }
-        }
-        if (this.alreadyExists === false) {
-          this.restrauntService.addAppointment(newFormData);
-          this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: newFormData }));
-          this.router.navigate(['restraunt/BookStatus', this.id]);
-        }
-        else {
-          this.alreadyExists = false;
-        }
-      }
-      else {
-        this.restrauntService.addAppointment(newFormData);
-        this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: newFormData }));
-        this.router.navigate(['restraunt/BookStatus/', this.id]);
-      }
+      });
+      this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: formData }));
+      this.router.navigate(['restraunt/BookStatus']);
+      // if (this.storedFormData.length > 0) {
+      //   for (let i = 0; i < this.storedFormData.length; i++) {
+      //     if (this.storedFormData[i].tableSize === formData.tableSize &&
+      //       this.storedFormData[i].date === formData.date && this.storedFormData[i].time === formData.time) {
+      //       this.restrauntService.openToastSuccess(NO_APPOINTMENT_AVAILABLE, ACTION);
+      //       this.alreadyExists = true;
+      //     }
+      //   }
+      //   if (this.alreadyExists === false) {
+      //     this.restrauntService.addAppointment(newFormData);
+      //     this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: newFormData }));
+      //     this.router.navigate(['restraunt/BookStatus']);
+      //   }
+      //   else {
+      //     this.alreadyExists = false;
+      //   }
+      // }
+      // else {
+      //   this.restrauntService.addAppointment(newFormData);
+      //   this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: newFormData }));
+      //   this.router.navigate(['restraunt/BookStatus/']);
+      // }
     }
   }
 }
