@@ -12,6 +12,10 @@ p {
 
 section {
     width: 80%;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    height: 100vh;
     padding: 20px;
     margin: auto;
     font-family: "Poppins", sans-serif;
@@ -24,6 +28,7 @@ section {
 
 .restraunt-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin: 10px 0px;
     gap: 20px;
@@ -33,9 +38,12 @@ section {
 }
 
 .restraunt-container img {
-    width: 30%;
+    width: 500px;
+    height: 40vh;
+    opacity: 0.9;
+    object-fit: cover;
     border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .icon-container {
@@ -52,26 +60,13 @@ button {
 /* Section classes ends  */
 
 /* Media queries starts  */
-
-/* @media (max-width: 1200px) {
-    .restraunt-container {
-        width: 90%;
-    }
-}
-
-@media (max-width: 992px) {
-    .restraunt-container {
-        width: 80%;
-    }
-}
-
-@media (max-width: 576px) {
-    .restraunt-list-container {
-        flex-direction: column;
-        gap: 15px;
-    }
-
+@media (max-width: 1200px) {
     .restraunt-container {
         width: 100%;
+        gap: 0px;
     }
-} */
+
+    .restraunt-container img {
+        max-width: 380px;
+    }
+}

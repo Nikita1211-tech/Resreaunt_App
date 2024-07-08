@@ -1,14 +1,28 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { RestrauntState } from "../reducers/restraunt-list-reducers";
+import { AppointmentState, RestrauntState } from "../reducers/restraunt-list-reducers";
 
-export const selectCategoryFeature = createFeatureSelector<RestrauntState>('restraunts');
+// Selector of restraunt list 
+export const selectRestrauntFeature = createFeatureSelector<RestrauntState>('restraunts');
 
-export const selectAllRestraunt =  createSelector(
-    selectCategoryFeature,
-    (state: RestrauntState) =>  state.restraunts
+export const selectAllRestraunt = createSelector(
+  selectRestrauntFeature,
+  (state: RestrauntState) => state.restraunts
 )
 
 export const selectRestrauntError = createSelector(
-    selectCategoryFeature,
-    (state: RestrauntState) => state.error
+  selectRestrauntFeature,
+  (state: RestrauntState) => state.error
 )
+
+// Selector of appointment list
+export const selectAppointmentFeature = createFeatureSelector<AppointmentState>('appointments');
+
+export const selectAppointments = createSelector(
+  selectAppointmentFeature,
+  (state: AppointmentState) => state.appointments
+);
+
+export const selectAppointmentError = createSelector(
+  selectAppointmentFeature,
+  (state: AppointmentState) => state.error
+);

@@ -1,0 +1,82 @@
+h6 {
+    margin: 0px;
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.767);
+}
+
+p {
+    margin: 0px;
+    color: rgba(0, 0, 0, 0.664);
+}
+
+span {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.644);
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.restraunt-common-preview {
+    width: 100%;
+}
+
+/* Section classes starts  */
+
+.container-row2 {
+    width: 80%;
+    height: 60vh;
+    margin: auto;
+}
+
+.appointment {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.appointment-container {
+    width: 44%;
+    padding: 20px;
+    border: solid 2px rgba(3, 22, 190, 0.247);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.appointment-container-row1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.appointment-actions-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.edit-icon {
+    color: rgba(0, 128, 0, 0.616);
+}
+
+.delete-icon {
+    color: rgba(255, 0, 0, 0.788);
+}
+
+.table-data-conatiner {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Section classes ends  */

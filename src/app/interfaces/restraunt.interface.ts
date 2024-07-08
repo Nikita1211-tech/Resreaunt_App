@@ -8,9 +8,11 @@ export interface Restraunt {
 
 export interface formData {
     id: number;
+    restrauntId: number;
     tableSize: string;
     tableLoc: string;
     date: string;
+    time: string;
 }
 
 export interface TableType {

@@ -1,7 +1,3 @@
-.restraunt-common-preview {
-    width: 100%;
-}
-
 .container {
     width: 100%;
     height: 100vh;
@@ -13,10 +9,14 @@
     font-family: "Poppins", sans-serif;
 }
 
+.restraunt-common-preview {
+    width: 100%;
+}
+
 /* Section classes starts  */
 .book-restraunt-container {
     width: 80%;
-    height: 70vh;
+    height: 60vh;
     margin: auto;
     padding: 20px;
     font-family: "Poppins", sans-serif;
@@ -52,6 +52,14 @@ button {
     padding: 30px;
     border-radius: 5px;
     font-family: "Poppins", sans-serif;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__content {
+    color: black;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px;
 }
 
 /* Section classes ends  */
