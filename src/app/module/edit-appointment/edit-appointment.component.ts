@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RestrauntService } from '../../services/restraunt.service';
-import { ACTION, APPOINTMENT_NOT_FOUND, APPOINTMENT_UPDATED_SUCCESSFULLY, appointmentListKey } from '../../enum/localStorage-enum';
+import { ACTION, APPOINTMENT_UPDATED_SUCCESSFULLY, appointmentListKey } from '../../enum/localStorage-enum';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -55,24 +55,20 @@ export class EditAppointmentComponent {
     this.formData$ = this.store.select(RestrauntSelectors.selectAppointments);
 
     this.formData$.subscribe(data => {
+      this.storedFormData = data;
       if (data) {
         const filteredData = data.find(item => item.id === Number(this.bookingId));
+        console.log(typeof(filteredData?.date))
         if (filteredData) {
           this.updateRestrauntForm.patchValue({
             tableSize: filteredData.tableSize,
             tableLoc: filteredData.tableLoc,
-            date: filteredData.date,
+            date: new Date(filteredData.date),
             time: filteredData.time
           })
         }
       }
     });
-
-    // Fetches booking list 
-    let storedFormData = localStorage.getItem(appointmentListKey);
-    if (storedFormData) {
-      this.storedFormData = JSON.parse(storedFormData);
-    }
 
     // Date Validator 
     this.minDate = new Date();
@@ -95,31 +91,18 @@ export class EditAppointmentComponent {
       if (updatedDate) {
         this.date = updatedDate;
       }
-      const updatedData = {
+      const updatedData: formData = {
         id: this.bookingId,
         restrauntId: Number(this.id),
         tableSize: formValues.tableSize,
         tableLoc: formValues.tableLoc,
-        date: updatedDate,
+        date: this.date,
         time: formValues.time
-      };
-      let formData = localStorage.getItem(appointmentListKey);
-      if (formData) {
-        let parsedFormData = JSON.parse(formData);
-        if (parsedFormData) {
-          const dataIndex = parsedFormData.findIndex((item: { id: number }) => item.id === updatedData.id);
-          if (dataIndex !== -1) {
-            parsedFormData[dataIndex] = updatedData;
-            this.restrauntService.updateAppointment(parsedFormData);
-            this.store.dispatch(RestrauntActions.updateBookedAppointment({ appointments: parsedFormData }));
-            this.restrauntService.openToastSuccess(APPOINTMENT_UPDATED_SUCCESSFULLY, ACTION);
-            this.router.navigate(['/restraunt']);
-          }
-        }
       }
-      else {
-        this.restrauntService.openToastSuccess(APPOINTMENT_NOT_FOUND, ACTION);
-      }
+      this.store.dispatch(RestrauntActions.updateBookedAppointment({ appointment: updatedData }));
+      localStorage.setItem(appointmentListKey, JSON.stringify(this.storedFormData));
+      this.restrauntService.openToastSuccess(APPOINTMENT_UPDATED_SUCCESSFULLY, ACTION);
+      this.router.navigate(['/restraunt/BookStatus']);
     }
   }
 }

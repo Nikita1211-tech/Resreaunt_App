@@ -1,5 +1,5 @@
 .restraunt-common-preview {
-    width: 100%;
+    width: 80%;
 }
 
 .container {
@@ -10,6 +10,7 @@
     gap: 10px;
     align-items: center;
     justify-content: center;
+    margin-top: 40px;
     font-family: "Poppins", sans-serif;
 }
 

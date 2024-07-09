@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as RestrauntActions from './../actions/restraunt-list-actions';
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, concatMap, exhaustMap, map, of, switchMap } from "rxjs";
 import { RestrauntService } from "../../services/restraunt.service";
 import { formData, Restraunt } from "../../interfaces/restraunt.interface";
 
@@ -52,8 +52,8 @@ export class RestrauntEffects {
     // Deletes appointment list
     deleteAppointment$ = createEffect(() => this.action$.pipe(
         ofType(RestrauntActions.deleteBookedAppointment),
-        switchMap(({ appointments }) => this.restrauntService.deleteAppointment(appointments).pipe(
-            map((res: formData[]) => RestrauntActions.deleteBookedAppointmentSuccess({ appointments: res }))
+        switchMap(({ id }) => this.restrauntService.deleteAppointment(id).pipe(
+            map((res: number) => RestrauntActions.deleteBookedAppointmentSuccess({ id: res }))
         )),
         catchError((error: { message: string }) => of(
             RestrauntActions.deleteBookedAppointmentFailure({ error: 'Failed to delete appointment' })
@@ -63,8 +63,8 @@ export class RestrauntEffects {
     // Updates appointment list
     updateAppointment$ = createEffect(() => this.action$.pipe(
         ofType(RestrauntActions.updateBookedAppointment),
-        switchMap(({ appointments }) => this.restrauntService.updateAppointment(appointments).pipe(
-            map((res: formData[]) => RestrauntActions.updateBookedAppointmentSuccess({ appointments: res }))
+        switchMap(({ appointment }) => this.restrauntService.updateAppointment(appointment).pipe(
+            map((res: formData) => RestrauntActions.updateBookedAppointmentSuccess({ appointment: res }))
         )),
         catchError((error: { message: string }) => of(
             RestrauntActions.updateBookedAppointmentFailure({ error: 'Failed to update appointment' })

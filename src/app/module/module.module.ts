@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BookStatusComponent } from './book-status/book-status.component';
 import { EditAppointmentComponent } from './edit-appointment/edit-appointment.component';
 import { RestrauntPreviewComponent } from '../common/component/restraunt-preview/restraunt-preview.component';
+import { NavbarComponent } from '../common/component/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RestrauntPreviewComponent } from '../common/component/restraunt-preview
     BookRestrauntComponent,
     BookStatusComponent,
     EditAppointmentComponent,
-    RestrauntPreviewComponent
+    RestrauntPreviewComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,

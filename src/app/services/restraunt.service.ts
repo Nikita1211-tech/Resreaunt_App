@@ -64,14 +64,14 @@ export class RestrauntService {
     return of(formData);
   }
 
-  // Deletes appointment list and resets the appointmwntList data in localStorage 
-  deleteAppointment(formData: formData[]): Observable<formData[]> {
-    localStorage.setItem(appointmentListKey, JSON.stringify(formData));
-    return of(formData);
+  // // Deletes appointment list and resets the appointmwntList data in localStorage 
+  deleteAppointment(id: number): Observable<number> {
+    // localStorage.setItem(appointmentListKey, JSON.stringify(formData));
+    return of(id);
   }
 
   // Updates appointment list and resets the appointmwntList data in localStorage 
-  updateAppointment(formData: formData[]): Observable<formData[]> {
+  updateAppointment(formData: formData): Observable<formData> {
     localStorage.setItem(appointmentListKey, JSON.stringify(formData));
     return of(formData);
   }

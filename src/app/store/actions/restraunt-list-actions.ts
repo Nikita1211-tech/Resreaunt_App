@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { ADD_APPOINTMENT, ADD_APPOINTMENT_FAILURE, ADD_APPOINTMENT_SUCCESS, LOAD_APPOINTMENT, LOAD_APPOINTMENT_SUCCESS, LOAD_RESTRAUNT, LOAD_RESTRAUNT_FAILURE, LOAD_RESTRAUNT_SUCCESS, UPDATE_APPOINTMENT, UPDATE_APPOINTMENT_FAILURE, UPDATE_APPOINTMENT_SUCCESS } from "../../enum/state-enum";
+import { ADD_APPOINTMENT, ADD_APPOINTMENT_FAILURE, ADD_APPOINTMENT_SUCCESS, DELETE_APPOINTMENT, DELETE_APPOINTMENT_FAILURE, DELETE_APPOINTMENT_SUCCESS, LOAD_APPOINTMENT, LOAD_APPOINTMENT_SUCCESS, LOAD_RESTRAUNT, LOAD_RESTRAUNT_FAILURE, LOAD_RESTRAUNT_SUCCESS, UPDATE_APPOINTMENT, UPDATE_APPOINTMENT_FAILURE, UPDATE_APPOINTMENT_SUCCESS } from "../../enum/state-enum";
 import { formData, Restraunt } from "../../interfaces/restraunt.interface";
 
 // Loads restraunt list  
@@ -18,11 +18,11 @@ export const addBookingAppointmentSuccess = createAction(ADD_APPOINTMENT_SUCCESS
 export const addBookingAppointmentFailure = createAction(ADD_APPOINTMENT_FAILURE, props<{ error: string }>());
 
 // Deletes appointment in appointment list 
-export const deleteBookedAppointment = createAction(ADD_APPOINTMENT, props<{ appointments: formData[] }>());
-export const deleteBookedAppointmentSuccess = createAction(ADD_APPOINTMENT_SUCCESS, props<{ appointments: formData[] }>());
-export const deleteBookedAppointmentFailure = createAction(ADD_APPOINTMENT_FAILURE, props<{ error: string }>());
+export const deleteBookedAppointment = createAction(DELETE_APPOINTMENT, props<{ id: number }>());
+export const deleteBookedAppointmentSuccess = createAction(DELETE_APPOINTMENT_SUCCESS, props<{ id: number }>());
+export const deleteBookedAppointmentFailure = createAction(DELETE_APPOINTMENT_FAILURE, props<{ error: string }>());
 
 // Updates appointment in appointment list 
-export const updateBookedAppointment = createAction(UPDATE_APPOINTMENT, props<{ appointments: formData[] }>());
-export const updateBookedAppointmentSuccess = createAction(UPDATE_APPOINTMENT_SUCCESS, props<{ appointments: formData[] }>());
+export const updateBookedAppointment = createAction(UPDATE_APPOINTMENT, props<{ appointment: formData }>());
+export const updateBookedAppointmentSuccess = createAction(UPDATE_APPOINTMENT_SUCCESS, props<{ appointment: formData }>());
 export const updateBookedAppointmentFailure = createAction(UPDATE_APPOINTMENT_FAILURE, props<{ error: string }>());
