@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { formData } from '../../interfaces/restraunt.interface';
+import { Appointment } from '../../interfaces/restraunt.interface';
 import * as RestrauntActions from './../../store/actions/restraunt-list-actions';
 import * as RestrauntSelectors from './../../store/selectors/restraunt-list-selectors';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,8 +21,9 @@ import { DatePipe } from '@angular/common';
 export class EditAppointmentComponent {
   updateRestrauntForm: FormGroup;
   id!: string;
-  formData$!: Observable<formData[]>;
-  storedFormData: formData[] = [];
+  appointment$!: Observable<Appointment[]>;
+  storedAppointmentData: Appointment[] = [];
+  restrauntName!: string;
   tableSize: number[] = [1, 2, 4, 6];
   seatLocation: string[] = ['Left', 'Right', 'Center'];
   timeSlot: string[] = ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm'];
@@ -33,8 +34,7 @@ export class EditAppointmentComponent {
   bookingId!: number;
 
   constructor(private route: ActivatedRoute, private store: Store, private datePipe: DatePipe, private router: Router,
-    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
-    private restrauntService: RestrauntService,) {
+    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private restrauntService: RestrauntService) {
     this.updateRestrauntForm = new FormGroup({
       tableSize: new FormControl('', Validators.required),
       tableLoc: new FormControl('', Validators.required),
@@ -52,14 +52,14 @@ export class EditAppointmentComponent {
     this.route.queryParams.subscribe(params => {
       this.bookingId = Number(params['bookingId']);
     })
-    this.formData$ = this.store.select(RestrauntSelectors.selectAppointments);
+    this.appointment$ = this.store.select(RestrauntSelectors.selectAllAppointments);
 
-    this.formData$.subscribe(data => {
-      this.storedFormData = data;
+    this.appointment$.subscribe(data => {
+      this.storedAppointmentData = data;
       if (data) {
         const filteredData = data.find(item => item.id === Number(this.bookingId));
-        console.log(typeof(filteredData?.date))
         if (filteredData) {
+          this.restrauntName = filteredData.restrauntName;
           this.updateRestrauntForm.patchValue({
             tableSize: filteredData.tableSize,
             tableLoc: filteredData.tableLoc,
@@ -86,21 +86,22 @@ export class EditAppointmentComponent {
       return;
     }
     else {
-      const formValues = this.updateRestrauntForm.value;
-      let updatedDate = this.datePipe.transform(formValues.date, 'MM-dd-yyyy');
+      const updatedAppointmentData = this.updateRestrauntForm.value;
+      let updatedDate = this.datePipe.transform(updatedAppointmentData.date, 'MM-dd-yyyy');
       if (updatedDate) {
         this.date = updatedDate;
       }
-      const updatedData: formData = {
+      const updatedAppointment: Appointment = {
         id: this.bookingId,
         restrauntId: Number(this.id),
-        tableSize: formValues.tableSize,
-        tableLoc: formValues.tableLoc,
+        restrauntName: this.restrauntName,
+        tableSize: updatedAppointmentData.tableSize,
+        tableLoc: updatedAppointmentData.tableLoc,
         date: this.date,
-        time: formValues.time
+        time: updatedAppointmentData.time
       }
-      this.store.dispatch(RestrauntActions.updateBookedAppointment({ appointment: updatedData }));
-      localStorage.setItem(appointmentListKey, JSON.stringify(this.storedFormData));
+      this.store.dispatch(RestrauntActions.updateBookedAppointment({ appointment: updatedAppointment }));
+      localStorage.setItem(appointmentListKey, JSON.stringify(this.storedAppointmentData));
       this.restrauntService.openToastSuccess(APPOINTMENT_UPDATED_SUCCESSFULLY, ACTION);
       this.router.navigate(['/restraunt/BookStatus']);
     }

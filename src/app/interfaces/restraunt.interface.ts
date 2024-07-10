@@ -6,18 +6,12 @@ export interface Restraunt {
     availableSeats: number;
 }
 
-export interface formData {
+export interface Appointment {
     id: number;
     restrauntId: number;
+    restrauntName: string;
     tableSize: string;
     tableLoc: string;
     date: string;
     time: string;
-}
-
-export interface TableType {
-    oneSeaterTable: number;
-    twoSeaterTable: number;
-    fourSeaterTable: number;
-    sixSeaterTable: number;
 }

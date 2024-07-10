@@ -18,8 +18,6 @@ export class RestrauntPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.restrauntId = Number(this.id);
-    this.restrauntList$ = this.store.select(
-      RestrauntSelectors.selectAllRestraunt
-    );
+    this.restrauntList$ = this.store.select(RestrauntSelectors.selectAllRestraunt);
   }
 }

@@ -50,13 +50,7 @@ section {
 .icon-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 5px;
 }
 
 button {

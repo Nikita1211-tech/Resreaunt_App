@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { formData, Restraunt } from '../interfaces/restraunt.interface';
-import { Observable, of } from 'rxjs';
-import { appointmentListKey, restrauntListKey } from '../enum/localStorage-enum';
+import { Appointment, Restraunt } from '../interfaces/restraunt.interface';
+import { delay, Observable, of } from 'rxjs';
+import { appointmentListKey } from '../enum/localStorage-enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -43,14 +43,13 @@ export class RestrauntService {
   ]
 
   // Sets restraunt list on localStorage 
-  setRestrauntList(): Observable<Restraunt[]> {
-    localStorage.setItem(restrauntListKey, JSON.stringify(this.restrauntList));
+  getRestrauntList(): Observable<Restraunt[]> {
     return of(this.restrauntList);
   }
 
   // Fetches appointment list from localStorage 
-  getAppointmentList(): Observable<formData[]> {
-    let parsedAppointmentData: formData[] = [];
+  getAppointmentList(): Observable<Appointment[]> {
+    let parsedAppointmentData: Appointment[] = [];
     let appointmentData = localStorage.getItem(appointmentListKey);
     if (appointmentData) {
       parsedAppointmentData = JSON.parse(appointmentData);
@@ -59,21 +58,18 @@ export class RestrauntService {
   }
 
   // Adds appointment list and resets the appointmwntList data in localStorage 
-  addAppointment(formData: formData[]): Observable<formData[]> {
-    localStorage.setItem(appointmentListKey, JSON.stringify(formData));
-    return of(formData);
+  addAppointment(newAppointment: Appointment[]): Observable<Appointment[]> {
+    return of(newAppointment);
   }
 
-  // // Deletes appointment list and resets the appointmwntList data in localStorage 
+  // Deletes appointment list and resets the appointmwntList data in localStorage 
   deleteAppointment(id: number): Observable<number> {
-    // localStorage.setItem(appointmentListKey, JSON.stringify(formData));
     return of(id);
   }
 
-  // Updates appointment list and resets the appointmwntList data in localStorage 
-  updateAppointment(formData: formData): Observable<formData> {
-    localStorage.setItem(appointmentListKey, JSON.stringify(formData));
-    return of(formData);
+  // Updates appointment list and resets the appointmentList data in localStorage 
+  updateAppointment(updatedAppointment: Appointment): Observable<Appointment> {
+    return of(updatedAppointment);
   }
 
   // Opens toast message 
@@ -82,5 +78,4 @@ export class RestrauntService {
       duration: 2000,
     });
   }
-
 }

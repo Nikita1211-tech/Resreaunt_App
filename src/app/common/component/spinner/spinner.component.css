@@ -1,0 +1,7 @@
+.spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 45%;
+    z-index: 99;
+    padding: 20px;
+}   

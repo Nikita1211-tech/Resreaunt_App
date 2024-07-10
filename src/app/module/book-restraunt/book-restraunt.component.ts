@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { formData } from '../../interfaces/restraunt.interface';
+import { Appointment, Restraunt } from '../../interfaces/restraunt.interface';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as RestrauntActions from './../../store/actions/restraunt-list-actions';
@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ACTION, appointmentListKey, NO_APPOINTMENT_AVAILABLE } from '../../enum/localStorage-enum';
+import { ACTION, APPOINTMENT_ADDED, appointmentListKey, NO_APPOINTMENT_AVAILABLE } from '../../enum/localStorage-enum';
 import { RestrauntService } from '../../services/restraunt.service';
 
 @Component({
@@ -21,8 +21,12 @@ import { RestrauntService } from '../../services/restraunt.service';
 export class BookRestrauntComponent implements OnInit {
   restrauntForm: FormGroup;
   id!: string;
-  formData$!: Observable<formData[]>;
-  storedFormData: formData[] = [];
+  appointmentId!: number;
+  formData$!: Observable<Appointment[]>;
+  restrauntList$!: Observable<Restraunt[]>;
+  restrauntName!: string;
+  filteredRestrauntNameList!: Restraunt[];
+  storedAppointments: Appointment[] = [];
   tableType: number[] = [1, 2, 4, 6];
   seatLocation: string[] = ['Left', 'Right', 'Center'];
   timeSlot: string[] = ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm'];
@@ -33,7 +37,7 @@ export class BookRestrauntComponent implements OnInit {
   maxDate!: Date;
 
   constructor(private route: ActivatedRoute, private datePipe: DatePipe, private store: Store,
-    private router: Router, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, 
+    private router: Router, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
     private restrauntService: RestrauntService) {
     this.restrauntForm = new FormGroup({
       tableSize: new FormControl('', Validators.required),
@@ -47,14 +51,25 @@ export class BookRestrauntComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.formData$ = this.store.select(RestrauntSelectors.selectAppointments);
-    // console.log(this.storedFormData)
+    this.formData$ = this.store.select(RestrauntSelectors.selectAllAppointments);
+    this.restrauntList$ = this.store.select(RestrauntSelectors.selectAllRestraunt);
 
-    // Fetches appointment list 
+    // Filters restraunt name according to id 
+    this.restrauntList$.forEach(value => {
+      this.filteredRestrauntNameList = value.filter(item => item.id === Number(this.id));
+      this.restrauntName = this.filteredRestrauntNameList[0].name;
+    });
+
+    this.appointmentId = this.storedAppointments.length + 1;
+    // Fetches appointment list and assigning id to newly added appointment
     this.formData$.subscribe((value) => {
-      this.storedFormData = value;
-      console.log('Stored data is ',value)
-    })
+      this.storedAppointments = value;
+      this.storedAppointments.forEach((value) => {
+        if (this.appointmentId === value.id) {
+          this.appointmentId = this.storedAppointments.length + 2;
+        }
+      });
+    });
 
     // Date Validator 
     this.minDate = new Date();
@@ -78,36 +93,41 @@ export class BookRestrauntComponent implements OnInit {
       if (updatedDate) {
         this.date = updatedDate;
       }
-      let formData: formData [] = []
-      formData.push({
-        id: this.storedFormData.length + 1,
+      let newAppointment: Appointment[] = [];
+      newAppointment.push({
+        id: this.appointmentId,
         restrauntId: Number(this.id),
+        restrauntName: this.restrauntName,
         tableSize: tableSize,
         tableLoc: tableLoc,
         date: this.date,
         time: time
       });
-      if (this.storedFormData.length > 0) {
-        for (let i = 0; i < this.storedFormData.length; i++) {
-          if (this.storedFormData[i].tableSize === tableSize && this.storedFormData[i].date === this.date 
-            && this.storedFormData[i].time === time) {
+      if (this.storedAppointments.length > 0) {
+        for (let i = 0; i < this.storedAppointments.length; i++) {
+          if (this.storedAppointments[i].tableSize === tableSize && this.storedAppointments[i].date === this.date
+            && this.storedAppointments[i].time === time) {
             this.restrauntService.openToastSuccess(NO_APPOINTMENT_AVAILABLE, ACTION);
             this.alreadyExists = true;
           }
         }
         if (this.alreadyExists === false) {
-          this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: formData }));
-          localStorage.setItem(appointmentListKey, JSON.stringify(this.storedFormData));
+          this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: newAppointment }));
+          console.log(this.storedAppointments)
+          localStorage.setItem(appointmentListKey, JSON.stringify(this.storedAppointments));
           this.router.navigate(['restraunt/BookStatus']);
+          this.restrauntService.openToastSuccess(APPOINTMENT_ADDED, ACTION);
         }
         else {
           this.alreadyExists = false;
         }
       }
       else {
-        this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: formData }));
-        localStorage.setItem(appointmentListKey, JSON.stringify(this.storedFormData));
+        this.store.dispatch(RestrauntActions.addBookingAppointment({ appointments: newAppointment }));
+        console.log(this.storedAppointments)
+        localStorage.setItem(appointmentListKey, JSON.stringify(newAppointment));
         this.router.navigate(['restraunt/BookStatus']);
+        this.restrauntService.openToastSuccess(APPOINTMENT_ADDED, ACTION);
       }
     }
   }

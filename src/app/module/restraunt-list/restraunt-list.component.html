@@ -5,14 +5,10 @@
             <img [src]="restraunt.img">
             <div class="icon-container">
                 <p>{{ restraunt.name }}</p>
-                <div class="button-container">
-                    <button [routerLink]="['BookAppointment', restraunt.id]" mat-raised-button matTooltip="Book appointment">
-                        <mat-icon svgIcon="book-icon"></mat-icon>
-                    </button>
-                    <button [routerLink]="['BookStatus']" mat-raised-button matTooltip="View appointment">
-                        <mat-icon svgIcon="view-icon"></mat-icon>
-                    </button>
-                </div>
+                <button [routerLink]="['BookAppointment', restraunt.id]" mat-raised-button
+                    matTooltip="Book appointment">
+                    <mat-icon svgIcon="book-icon"></mat-icon>
+                </button>
             </div>
         </div>
     </div>

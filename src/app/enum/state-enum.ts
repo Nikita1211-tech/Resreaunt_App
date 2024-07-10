@@ -1,3 +1,8 @@
+// Spinner enums
+export const LOAD_SPINNER: string = "[Load] Load spinner";
+export const LOAD_SPINNER_SUCCESS: string = "[Load Success] Load spinner success";
+export const LOAD_SPINNER_FAILURE: string = "[Load Failure] Load spinner failure";
+
 // Restraunt list enums 
 export const LOAD_RESTRAUNT: string = "[Load] Load restarunt list";
 export const LOAD_RESTRAUNT_SUCCESS: string = "[Load Success] Load restarunt list success";

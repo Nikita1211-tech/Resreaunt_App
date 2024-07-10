@@ -6,7 +6,7 @@
             <div *ngFor="let list of appointmentList | async" class="appointment-container">
                 <div class="appointment-container-row1">
                     <div>
-                        <h6>Appointment</h6>
+                        <h6>{{list.restrauntName}}</h6>
                     </div>
                     <div class="appointment-actions-container">
                         <a [routerLink]="['/restraunt/UpdateAppointment', list.restrauntId]"

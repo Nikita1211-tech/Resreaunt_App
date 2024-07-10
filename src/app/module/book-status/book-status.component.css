@@ -1,7 +1,7 @@
 h6 {
     margin: 0px;
     font-size: 17px;
-    color: rgba(0, 0, 0, 0.767);
+    color: rgba(0, 0, 0, 0.719);
 }
 
 p {
@@ -20,7 +20,6 @@ span {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: center;
     font-family: "Poppins", sans-serif;
 }
 
@@ -29,7 +28,7 @@ span {
 .container-row2 {
     width: 80%;
     height: 60vh;
-    margin: auto;
+    margin: 0px auto;
 }
 
 .appointment {
