@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RestrauntListComponent } from './module/restraunt-list/restraunt-list.component';
 
 const routes: Routes = [
-  { path: 'restraunt', component: RestrauntListComponent },
+  { path: '', redirectTo: 'restraunt', pathMatch: 'full' },
   {
     path:'restraunt',
     loadChildren: () => import('./module/module.module').then(m=> m.ModuleModule)

@@ -2,8 +2,9 @@ export interface Restraunt {
     id: number;
     name: string;
     img: string;
-    tableType: number[];
-    availableSeats: number;
+    tableSize: number[];
+    tableLocation: string[];
+    timeSlot: string[]
 }
 
 export interface Appointment {

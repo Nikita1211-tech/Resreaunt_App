@@ -14,6 +14,7 @@ export class RestrauntEffects {
   loadRestraunt$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.loadRestraunt),
     switchMap(() => this.restrauntService.getRestrauntList().pipe(
+      delay(1000),
       map((res: Restraunt[]) => RestrauntActions.loadRestrauntSuccess({ restraunts: res }))
     )),
     catchError((error: { message: string }) => of(
@@ -21,26 +22,12 @@ export class RestrauntEffects {
     ))
   ));
 
-  // Adds appointment in appointment list
-  addAppointment$ = createEffect(() => this.action$.pipe(
-    ofType(RestrauntActions.addBookingAppointment),
-    switchMap(({ appointments }) =>
-      this.restrauntService.addAppointment(appointments).pipe(
-        map((addedAppointment: Appointment[]) =>
-          RestrauntActions.addBookingAppointmentSuccess({ appointments: addedAppointment })
-        ),
-        catchError((error: { message: string }) =>
-          of(RestrauntActions.addBookingAppointmentFailure({ error: error.message }))
-        )
-      )
-    )
-  ));
-
   // Loads appointment list 
   loadAppointments$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.loadBookingAppointment),
     switchMap(() =>
       this.restrauntService.getAppointmentList().pipe(
+        delay(1000),
         map((appointments: Appointment[]) =>
           RestrauntActions.loadBookingAppointmentSuccess({ appointments })
         ),
@@ -51,11 +38,27 @@ export class RestrauntEffects {
     )
   ));
 
+  // Adds appointment in appointment list
+  addAppointment$ = createEffect(() => this.action$.pipe(
+    ofType(RestrauntActions.addBookingAppointment),
+    switchMap(({ appointments }) =>
+      this.restrauntService.addAppointment(appointments).pipe(
+        delay(1000),
+        map((addedAppointment: Appointment[]) =>
+          RestrauntActions.addBookingAppointmentSuccess({ appointments: addedAppointment })
+        ),
+        catchError((error: { message: string }) =>
+          of(RestrauntActions.addBookingAppointmentFailure({ error: error.message }))
+        )
+      )
+    )
+  ));
+
   // Deletes an appointment from appointment list
   deleteAppointment$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.deleteBookedAppointment),
     switchMap(({ id }) => this.restrauntService.deleteAppointment(id).pipe(
-      // delay(1000),
+      delay(1000),
       map((res: number) => RestrauntActions.deleteBookedAppointmentSuccess({ id: res }))
     )),
     catchError((error: { message: string }) => of(
@@ -67,6 +70,7 @@ export class RestrauntEffects {
   updateAppointment$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.updateBookedAppointment),
     switchMap(({ appointment }) => this.restrauntService.updateAppointment(appointment).pipe(
+      delay(1000),
       map((res: Appointment) => RestrauntActions.updateBookedAppointmentSuccess({ appointment: res }))
     )),
     catchError((error: { message: string }) => of(

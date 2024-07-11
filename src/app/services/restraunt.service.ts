@@ -16,29 +16,33 @@ export class RestrauntService {
       id: 1,
       name: "Aqua Kyota",
       img: "./../../assets/images/rest_1.jpg",
-      tableType: [1, 2, 4, 6],
-      availableSeats: 4
+      tableSize: [1, 2, 4, 6],
+      tableLocation: ['Left', 'Right', 'Center'],
+      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
     },
     {
       id: 2,
       name: "Burger Singh",
       img: "./../../assets/images/rest_2.jpg",
-      tableType: [1, 2, 4, 6],
-      availableSeats: 4
+      tableSize: [1, 2, 4, 6],
+      tableLocation: ['Left', 'Right', 'Center'],
+      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
     },
     {
       id: 3,
       name: "Panthouse Pizza",
       img: "./../../assets/images/rest_3.jpg",
-      tableType: [1, 2, 4, 6],
-      availableSeats: 4
+      tableSize: [1, 2, 4, 6],
+      tableLocation: ['Left', 'Right', 'Center'],
+      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
     },
     {
       id: 4,
       name: "Steuber's",
       img: "./../../assets/images/rest_4.jpg",
-      tableType: [1, 2, 4, 6],
-      availableSeats: 4
+      tableSize: [1, 2, 4, 6],
+      tableLocation: ['Left', 'Right', 'Center'],
+      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
     }
   ]
 

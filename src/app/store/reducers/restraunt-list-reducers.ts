@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { Appointment, Restraunt } from "../../interfaces/restraunt.interface";
 import * as RestrauntActions from './../actions/restraunt-list-actions';
+import { appointmentListKey } from "../../enum/localStorage-enum";
 
 export interface RestrauntState {
     restraunts: Restraunt[];
@@ -57,26 +58,15 @@ export const appointmentReducer = createReducer(initialAppointmentState,
             loading: false
         };
     }),
-    // on(RestrauntActions.addBookingAppointment, (state, { appointments }) => {
-    //     return {
-    //         ...state,
-    //         loading: true
-    //     }
-    // }),
-    // on(RestrauntActions.updateBookedAppointment, (state, { appointment }) => {
-    //     return {
-    //         ...state,
-    //         loading: true
-    //     }
-    // }),
-    // on(RestrauntActions.deleteBookedAppointment, (state, { id }) => {
-    //     return {
-    //         ...state,
-    //         loading: true
-    //     }
-    // }),
+    on(RestrauntActions.addBookingAppointment, RestrauntActions.deleteBookedAppointment, RestrauntActions.updateBookedAppointment, (state) => {
+        return {
+            ...state,
+            loading: true
+        };
+    }),
     on(RestrauntActions.addBookingAppointmentSuccess, (state, { appointments }) => {
         let newAppointment = [...state.appointments, ...appointments];
+        localStorage.setItem(appointmentListKey, JSON.stringify(newAppointment));
         return {
             ...state,
             appointments: newAppointment,
@@ -84,7 +74,7 @@ export const appointmentReducer = createReducer(initialAppointmentState,
         };
     }),
     on(RestrauntActions.updateBookedAppointmentSuccess, (state, { appointment }) => {
-        let updatedAppointments = state.appointments.map((item) => {
+        let updatedAppointment = state.appointments.map((item) => {
             if (item.id === appointment.id) {
                 return {
                     ...item,
@@ -93,21 +83,23 @@ export const appointmentReducer = createReducer(initialAppointmentState,
             }
             return item;
         });
+        localStorage.setItem(appointmentListKey, JSON.stringify(updatedAppointment));
         return {
             ...state,
-            appointments: updatedAppointments,
+            appointments: updatedAppointment,
             loading: false
         };
     }),
     on(RestrauntActions.deleteBookedAppointmentSuccess, (state, { id }) => {
         let updatedAppointments = state.appointments.filter(appointment => appointment.id !== id);
+        localStorage.setItem(appointmentListKey, JSON.stringify(updatedAppointments));
         return {
             ...state,
             appointments: updatedAppointments,
             loading: false
         };
     }),
-    on(RestrauntActions.loadRestrauntFailure, RestrauntActions.loadBookingAppointmentFailure,
+    on(RestrauntActions.loadBookingAppointmentFailure,
         RestrauntActions.addBookingAppointmentFailure, RestrauntActions.updateBookedAppointmentFailure,
         RestrauntActions.deleteBookedAppointmentFailure, (state, { error }) => ({
             ...state,

@@ -10,14 +10,14 @@ import * as RestrauntSelectors from './../../../store/selectors/restraunt-list-s
   styleUrl: './restraunt-preview.component.css',
 })
 export class RestrauntPreviewComponent implements OnInit {
-  @Input() id!: string;
+  @Input() id!: number;
   restrauntId!: number;
   restrauntList$!: Observable<Restraunt[]>;
 
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.restrauntId = Number(this.id);
+    this.restrauntId = this.id;
     this.restrauntList$ = this.store.select(RestrauntSelectors.selectAllRestraunt);
   }
 }

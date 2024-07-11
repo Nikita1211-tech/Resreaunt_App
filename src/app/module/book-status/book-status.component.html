@@ -1,15 +1,15 @@
 <app-navbar></app-navbar>
 <div class="container">
     <div class="container-row2">
-        <h3>Currently booked appointments</h3>
+        <h3>Appointments</h3>
         <div class="appointment">
-            <div *ngFor="let list of appointmentList | async" class="appointment-container">
+            <div *ngFor="let list of appointmentList$ | async" class="appointment-container">
                 <div class="appointment-container-row1">
                     <div>
                         <h6>{{list.restrauntName}}</h6>
                     </div>
                     <div class="appointment-actions-container">
-                        <a [routerLink]="['/restraunt/UpdateAppointment', list.restrauntId]"
+                        <a [routerLink]="['/restraunt/BookAppointment', list.restrauntId]"
                             [queryParams]="{ bookingId: list.id }">
                             <mat-icon svgIcon="edit-icon" class="edit-icon"></mat-icon>
                         </a>
@@ -21,11 +21,11 @@
                 <div class="table-data-conatiner">
                     <div>
                         <p><span>Table Size:</span> {{ list.tableSize }}</p>
-                        <p><span>Table Location:</span> {{list.tableLoc}}</p>
+                        <p><span>Table Location:</span> {{ list.tableLoc }}</p>
                     </div>
                     <div>
                         <p><span>Time Slot:</span> {{ list.time }}</p>
-                        <p><span>Date:</span> {{ list.date }}</p>
+                        <p><span>Date:</span> {{ list.date | date }}</p>
                     </div>
                 </div>
             </div>

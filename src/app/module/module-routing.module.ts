@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookRestrauntComponent } from './book-restraunt/book-restraunt.component';
 import { RestrauntListComponent } from './restraunt-list/restraunt-list.component';
 import { BookStatusComponent } from './book-status/book-status.component';
-import { EditAppointmentComponent } from './edit-appointment/edit-appointment.component';
 
 const routes: Routes = [
   {
@@ -18,10 +17,6 @@ const routes: Routes = [
     path: 'BookStatus',
     component: BookStatusComponent
   },
-  {
-    path: 'UpdateAppointment/:id',
-    component: EditAppointmentComponent
-  }
 ];
 
 @NgModule({

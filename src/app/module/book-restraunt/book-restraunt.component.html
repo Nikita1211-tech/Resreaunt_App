@@ -1,13 +1,13 @@
 <app-navbar></app-navbar>
 <div class="container">
-  <app-restraunt-preview [id]="id" class="restraunt-common-preview"></app-restraunt-preview>
+  <app-restraunt-preview [id]="restrauntId" class="restraunt-common-preview"></app-restraunt-preview>
   <div class="book-restraunt-container">
-    <form [formGroup]="restrauntForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="restrauntForm" (ngSubmit)="onSave()">
       <div class="form-row1">
         <mat-form-field class="form-field">
-          <mat-select placeholder="Choose person(s)" formControlName="tableSize">
-            <mat-option *ngFor="let table of tableType" [value]="table">
-              {{ table }}
+          <mat-select placeholder="Choose table(s) for" formControlName="tableSize">
+            <mat-option *ngFor="let table of tableSize" [value]="table">
+              {{ table }} person
             </mat-option>
           </mat-select>
           @if (restrauntForm.get('tableSize')?.hasError('required')) {
@@ -16,7 +16,7 @@
         </mat-form-field>
         <mat-form-field class="form-field">
           <mat-select placeholder="Choose location" formControlName="tableLoc">
-            <mat-option *ngFor="let seat of seatLocation" [value]="seat">
+            <mat-option *ngFor="let seat of tableLocation" [value]="seat">
               {{ seat }}
             </mat-option>
           </mat-select>
@@ -27,7 +27,7 @@
       </div>
       <div class="form-row2">
         <mat-form-field class="form-field">
-          <mat-label>Choose a date</mat-label>
+          <mat-label>Choose booking date </mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="date">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -37,7 +37,7 @@
           }
         </mat-form-field>
         <mat-form-field class="form-field">
-          <mat-select placeholder="Choose time slot" formControlName="time">
+          <mat-select placeholder="Choose slot" formControlName="time">
             <mat-option *ngFor="let time of timeSlot" [value]="time">
               {{ time }} <mat-icon matPrefix svgIcon="time-icon"></mat-icon>
             </mat-option>
