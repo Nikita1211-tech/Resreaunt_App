@@ -1,6 +1,17 @@
-.restraunt-common-preview {
-    width: 100%;
+/* Global classes starts  */
+
+h4 {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    color: white;
+    font-size: 50px;
 }
+
+/* Global classes ends  */
+
+/* Section classes starts  */
 
 .container {
     width: 100%;
@@ -11,9 +22,22 @@
     align-items: center;
     justify-content: center;
     font-family: "Poppins", sans-serif;
+    margin-top: 20px;
 }
 
-/* Section classes starts  */
+.container-row1,
+.img-container {
+    width: 100%;
+    margin: auto;
+}
+
+img {
+    width: 100%;
+    height: 40vh;
+    opacity: 0.9;
+    object-fit: cover;
+}
+
 .book-restraunt-container {
     width: 80%;
     height: 70vh;

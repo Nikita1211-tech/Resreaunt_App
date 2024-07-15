@@ -1,11 +1,16 @@
+// localStorage keys 
 export const restrauntListKey: string = "restrauntList";
-export const appointmentListKey: string = "appointmentList";
+export const bookingListKey: string = "bookingList";
 
+// Toast Action message
 export const ACTION: string = "Close";
 
-// Form success messages 
-export const APPOINTMENT_DELETED: string = "Appointment deleted successfully";
-export const APPOINTMENT_ADDED: string = "Appointment booked successfully";
-export const APPOINTMENT_NOT_FOUND: string = "No appointment found";
-export const NO_APPOINTMENT_AVAILABLE: string = "Booking not available";
-export const APPOINTMENT_UPDATED_SUCCESSFULLY: string ="Booking updated successfully";
+// Success messages 
+export const BOOKING_ADDED: string = "Restraunt booked successfully";
+export const BOOKING_UPDATED: string ="Booking updated successfully";
+export const BOOKING_DELETED: string = "Booking deleted successfully";
+
+// Error messages 
+export const BOOKING_NOT_FOUND: string = "No booking found";
+export const NO_BOOKING_AVAILABLE: string = "Booking not available";
+

@@ -1,29 +1,30 @@
 // Spinner enums
 export const LOAD_SPINNER: string = "[Load] Load spinner";
-export const LOAD_SPINNER_SUCCESS: string = "[Load Success] Load spinner success";
-export const LOAD_SPINNER_FAILURE: string = "[Load Failure] Load spinner failure";
+
+// Resets success message after successful action 
+export const RESET_SUCCESS: string = "[Booking] Reset success message";
 
 // Restraunt list enums 
-export const LOAD_RESTRAUNT: string = "[Load] Load restarunt list";
-export const LOAD_RESTRAUNT_SUCCESS: string = "[Load Success] Load restarunt list success";
-export const LOAD_RESTRAUNT_FAILURE: string = "[Load Failure] Load restarunt list failure";
+export const LOAD_RESTRAUNT: string = "[Restraunt] Load restarunt list";
+export const LOAD_RESTRAUNT_SUCCESS: string = "[Restraunt Success] Load restarunt list success";
+export const LOAD_RESTRAUNT_FAILURE: string = "[Restraunt Failure] Load restarunt list failure";
 
-// Restraunt appointment enums 
-export const LOAD_APPOINTMENT: string = "[Load] Load appointment list";
-export const LOAD_APPOINTMENT_SUCCESS: string = "[Load] Load appointment list success";
-export const LOAD_APPOINTMENT_FAILURE: string = "[Load] Load appointment list failure";
+// Restraunt booking enums 
+export const LOAD_BOOKING: string = "[Booking] Load booking list";
+export const LOAD_BOOKING_SUCCESS: string = "[Booking] Load booking list success";
+export const LOAD_BOOKING_FAILURE: string = "[Booking] Load booking list failure";
 
 // Update enums for restraunt 
-export const ADD_APPOINTMENT: string = "[Add] Add appointment list";
-export const ADD_APPOINTMENT_SUCCESS: string = "[Add] Add appointment list success";
-export const ADD_APPOINTMENT_FAILURE: string = "[Add] Add appointment list failure";
+export const ADD_BOOKING: string = "[Booking] Add booking list";
+export const ADD_BOOKING_SUCCESS: string = "[Booking] Add booking list success";
+export const ADD_BOOKING_FAILURE: string = "[Booking] Add booking list failure";
 
 // Delete enums for restraunt 
-export const DELETE_APPOINTMENT: string = "[Delete] Delete appointment list";
-export const DELETE_APPOINTMENT_SUCCESS: string = "[Delete] Delete appointment list success";
-export const DELETE_APPOINTMENT_FAILURE: string = "[Delete] Delete appointment list failure";
+export const DELETE_BOOKING: string = "[Booking] Delete booking list";
+export const DELETE_BOOKING_SUCCESS: string = "[Booking] Delete booking list success";
+export const DELETE_BOOKING_FAILURE: string = "[Booking] Delete booking list failure";
 
 // Update enums for restraunt 
-export const UPDATE_APPOINTMENT: string = "[Update] Update appointment list";
-export const UPDATE_APPOINTMENT_SUCCESS: string = "[Update] Update appointment list success";
-export const UPDATE_APPOINTMENT_FAILURE: string = "[Update] Update appointment list failure";
+export const UPDATE_BOOKING: string = "[Booking] Update booking list";
+export const UPDATE_BOOKING_SUCCESS: string = "[Booking] Update booking list success";
+export const UPDATE_BOOKING_FAILURE: string = "[Booking] Update booking list failure";

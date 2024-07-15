@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(RestrauntActions.loadRestraunt());
-    this.store.dispatch(RestrauntActions.loadBookingAppointment());
+    this.store.dispatch(RestrauntActions.loadBooking());
     this.loading$ = this.store.select(RestrauntSelectors.selectLoader);
   }
 }

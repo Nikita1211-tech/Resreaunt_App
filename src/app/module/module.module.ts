@@ -17,16 +17,12 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BookStatusComponent } from './book-status/book-status.component';
-import { RestrauntPreviewComponent } from '../common/component/restraunt-preview/restraunt-preview.component';
-import { NavbarComponent } from '../common/component/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     RestrauntListComponent,
     BookRestrauntComponent,
-    BookStatusComponent,
-    RestrauntPreviewComponent,
-    NavbarComponent
+    BookStatusComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,10 @@
-<app-navbar></app-navbar>
 <div class="container">
-  <app-restraunt-preview [id]="restrauntId" class="restraunt-common-preview"></app-restraunt-preview>
+  <div class="container-row1" *ngFor="let restraunt of restrauntList$ | async">
+    <div class="img-container" *ngIf="restrauntId === restraunt.id">
+      <img [src]="restraunt.img" alt="Restraunt image" />
+      <h4>{{ restraunt.name }}</h4>
+    </div>
+  </div>
   <div class="book-restraunt-container">
     <form [formGroup]="restrauntForm" (ngSubmit)="onSave()">
       <div class="form-row1">
@@ -16,8 +20,8 @@
         </mat-form-field>
         <mat-form-field class="form-field">
           <mat-select placeholder="Choose location" formControlName="tableLoc">
-            <mat-option *ngFor="let seat of tableLocation" [value]="seat">
-              {{ seat }}
+            <mat-option *ngFor="let location of tableLocation" [value]="location">
+              {{ location }}
             </mat-option>
           </mat-select>
           @if (restrauntForm.get('tableLoc')?.hasError('required')) {
@@ -27,7 +31,7 @@
       </div>
       <div class="form-row2">
         <mat-form-field class="form-field">
-          <mat-label>Choose booking date </mat-label>
+          <mat-label>Choose booking date</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="date">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -38,8 +42,8 @@
         </mat-form-field>
         <mat-form-field class="form-field">
           <mat-select placeholder="Choose slot" formControlName="time">
-            <mat-option *ngFor="let time of timeSlot" [value]="time">
-              {{ time }} <mat-icon matPrefix svgIcon="time-icon"></mat-icon>
+            <mat-option *ngFor="let slots of timeSlot" [value]="slots">
+              {{ slots }} <mat-icon matPrefix svgIcon="time-icon"></mat-icon>
             </mat-option>
           </mat-select>
           @if (restrauntForm.get('time')?.hasError('required')) {

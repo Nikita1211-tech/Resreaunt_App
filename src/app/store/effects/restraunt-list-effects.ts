@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as RestrauntActions from './../actions/restraunt-list-actions';
-import { catchError, delay, map, of, switchMap, throwError, timeout } from "rxjs";
+import { catchError, delay, map, of, switchMap } from "rxjs";
 import { RestrauntService } from "../../services/restraunt.service";
-import { Appointment, Restraunt } from "../../interfaces/restraunt.interface";
+import { Booking, Restraunt } from "../../interfaces/restraunt.interface";
 
 @Injectable()
 export class RestrauntEffects {
@@ -22,59 +22,59 @@ export class RestrauntEffects {
     ))
   ));
 
-  // Loads appointment list 
-  loadAppointments$ = createEffect(() => this.action$.pipe(
-    ofType(RestrauntActions.loadBookingAppointment),
+  // Loads booking list 
+  loadBookings$ = createEffect(() => this.action$.pipe(
+    ofType(RestrauntActions.loadBooking),
     switchMap(() =>
-      this.restrauntService.getAppointmentList().pipe(
+      this.restrauntService.getBookingList().pipe(
         delay(1000),
-        map((appointments: Appointment[]) =>
-          RestrauntActions.loadBookingAppointmentSuccess({ appointments })
+        map((booking: Booking[]) =>
+          RestrauntActions.loadBookingSuccess({ booking })
         ),
         catchError((error: { message: string }) =>
-          of(RestrauntActions.loadBookingAppointmentFailure({ error: error.message }))
+          of(RestrauntActions.loadBookingFailure({ error: error.message }))
         )
       )
     )
   ));
 
-  // Adds appointment in appointment list
-  addAppointment$ = createEffect(() => this.action$.pipe(
-    ofType(RestrauntActions.addBookingAppointment),
-    switchMap(({ appointments }) =>
-      this.restrauntService.addAppointment(appointments).pipe(
+  // Adds new booking in booking list
+  addBooking$ = createEffect(() => this.action$.pipe(
+    ofType(RestrauntActions.addBooking),
+    switchMap(({ bookings }) =>
+      this.restrauntService.addBooking(bookings).pipe(
         delay(1000),
-        map((addedAppointment: Appointment[]) =>
-          RestrauntActions.addBookingAppointmentSuccess({ appointments: addedAppointment })
+        map((addedBooking: Booking[]) =>
+          RestrauntActions.addBookingSuccess({ bookings: addedBooking })
         ),
         catchError((error: { message: string }) =>
-          of(RestrauntActions.addBookingAppointmentFailure({ error: error.message }))
+          of(RestrauntActions.addBookingFailure({ error: error.message }))
         )
       )
     )
   ));
 
-  // Deletes an appointment from appointment list
-  deleteAppointment$ = createEffect(() => this.action$.pipe(
-    ofType(RestrauntActions.deleteBookedAppointment),
-    switchMap(({ id }) => this.restrauntService.deleteAppointment(id).pipe(
+  // Deletes a booking from booking list
+  deleteBooking$ = createEffect(() => this.action$.pipe(
+    ofType(RestrauntActions.deleteBooking),
+    switchMap(({ id }) => this.restrauntService.deleteBooking(id).pipe(
       delay(1000),
-      map((res: number) => RestrauntActions.deleteBookedAppointmentSuccess({ id: res }))
+      map((res: number) => RestrauntActions.deleteBookingSuccess({ id: res }))
     )),
     catchError((error: { message: string }) => of(
-      RestrauntActions.deleteBookedAppointmentFailure({ error: error.message })
+      RestrauntActions.deleteBookingFailure({ error: error.message })
     ))
   ));
 
-  // Updates an appointment in appointment list
-  updateAppointment$ = createEffect(() => this.action$.pipe(
-    ofType(RestrauntActions.updateBookedAppointment),
-    switchMap(({ appointment }) => this.restrauntService.updateAppointment(appointment).pipe(
+  // Updates a booking in booking list
+  updateBooking$ = createEffect(() => this.action$.pipe(
+    ofType(RestrauntActions.updateBooking),
+    switchMap(({ booking }) => this.restrauntService.updateBooking(booking).pipe(
       delay(1000),
-      map((res: Appointment) => RestrauntActions.updateBookedAppointmentSuccess({ appointment: res }))
+      map((res: Booking) => RestrauntActions.updateBookingSuccess({ booking: res }))
     )),
     catchError((error: { message: string }) => of(
-      RestrauntActions.updateBookedAppointmentFailure({ error: error.message })
+      RestrauntActions.updateBookingFailure({ error: error.message })
     ))
   ));
 }

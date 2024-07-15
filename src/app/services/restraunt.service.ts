@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Appointment, Restraunt } from '../interfaces/restraunt.interface';
-import { delay, Observable, of } from 'rxjs';
-import { appointmentListKey } from '../enum/localStorage-enum';
+import { Booking, Restraunt } from '../interfaces/restraunt.interface';
+import { Observable, of } from 'rxjs';
+import { bookingListKey } from '../enum/localStorage-enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class RestrauntService {
       img: "./../../assets/images/rest_1.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
-      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
+      timeSlot: ['11:00 am - 01:00 pm', '01:00 pm - 03:00 pm', '03:00 pm - 05:00 pm', '07:00 pm - 09:00 pm']
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ export class RestrauntService {
       img: "./../../assets/images/rest_2.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
-      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
+      timeSlot: ['09:00 am - 11:00 am', '01:00 pm - 02:00 pm', '03:00 pm - 05:00 pm', '08:00 pm - 10:00 pm']
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ export class RestrauntService {
       img: "./../../assets/images/rest_3.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
-      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
+      timeSlot: ['10:00 am - 11:30 am', '12:30 pm - 01:30 pm', '03:00 pm - 05:00 pm', '07:00 pm - 08:30 pm']
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ export class RestrauntService {
       img: "./../../assets/images/rest_4.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
-      timeSlot: ['12:00 pm', '01:00 pm', '03:00 pm', '07:00 pm']
+      timeSlot: ['09:00 am - 11:00 am', '02:00 pm - 04:00 pm', '06:00 pm - 08:00 pm', '09:00 pm - 11:00 pm']
     }
   ]
 
@@ -51,29 +51,29 @@ export class RestrauntService {
     return of(this.restrauntList);
   }
 
-  // Fetches appointment list from localStorage 
-  getAppointmentList(): Observable<Appointment[]> {
-    let parsedAppointmentData: Appointment[] = [];
-    let appointmentData = localStorage.getItem(appointmentListKey);
-    if (appointmentData) {
-      parsedAppointmentData = JSON.parse(appointmentData);
+  // Fetches booking list from localStorage 
+  getBookingList(): Observable<Booking[]> {
+    let parsedBookingData: Booking[] = [];
+    let bookingData = localStorage.getItem(bookingListKey);
+    if (bookingData) {
+      parsedBookingData = JSON.parse(bookingData);
     }
-    return of(parsedAppointmentData);
+    return of(parsedBookingData);
   }
 
-  // Adds appointment list and resets the appointmwntList data in localStorage 
-  addAppointment(newAppointment: Appointment[]): Observable<Appointment[]> {
-    return of(newAppointment);
+  // Adds new booking in booking list
+  addBooking(newBooking: Booking[]): Observable<Booking[]> {
+    return of(newBooking);
   }
 
-  // Deletes appointment list and resets the appointmwntList data in localStorage 
-  deleteAppointment(id: number): Observable<number> {
+  // Deletes booking by id from booking list
+  deleteBooking(id: number): Observable<number> {
     return of(id);
   }
 
-  // Updates appointment list and resets the appointmentList data in localStorage 
-  updateAppointment(updatedAppointment: Appointment): Observable<Appointment> {
-    return of(updatedAppointment);
+  // Updates booking by id in booking list
+  updateBooking(updatedBooking: Booking): Observable<Booking> {
+    return of(updatedBooking);
   }
 
   // Opens toast message 

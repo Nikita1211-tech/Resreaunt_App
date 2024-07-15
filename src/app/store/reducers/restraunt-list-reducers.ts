@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
-import { Appointment, Restraunt } from "../../interfaces/restraunt.interface";
+import { Booking, Restraunt } from "../../interfaces/restraunt.interface";
 import * as RestrauntActions from './../actions/restraunt-list-actions';
-import { appointmentListKey } from "../../enum/localStorage-enum";
+import { BOOKING_ADDED, BOOKING_DELETED, BOOKING_UPDATED, bookingListKey } from "../../enum/localStorage-enum";
 
 export interface RestrauntState {
     restraunts: Restraunt[];
@@ -15,15 +15,17 @@ const initialRestrauntState: RestrauntState = {
     error: null
 }
 
-export interface AppointmentState {
-    appointments: Appointment[];
+export interface BookingState {
+    bookings: Booking[];
     loading: boolean;
+    success: string | null,
     error: string | null;
 }
 
-const initialAppointmentState: AppointmentState = {
-    appointments: [],
+const initialBookingState: BookingState = {
+    bookings: [],
     loading: false,
+    success: null,
     error: null
 }
 
@@ -44,67 +46,75 @@ export const restrauntReducer = createReducer(initialRestrauntState,
     }))
 );
 
-export const appointmentReducer = createReducer(initialAppointmentState,
-    on(RestrauntActions.loadBookingAppointment, (state) => {
+export const bookingReducer = createReducer(initialBookingState,
+    on(RestrauntActions.loadBooking, (state) => {
         return {
             ...state,
             loading: true
         };
     }),
-    on(RestrauntActions.loadBookingAppointmentSuccess, (state, { appointments }) => {
+    on(RestrauntActions.loadBookingSuccess, (state, { booking }) => {
         return {
             ...state,
-            appointments: appointments,
+            bookings: booking,
             loading: false
         };
     }),
-    on(RestrauntActions.addBookingAppointment, RestrauntActions.deleteBookedAppointment, RestrauntActions.updateBookedAppointment, (state) => {
+    on(RestrauntActions.addBooking, RestrauntActions.deleteBooking, RestrauntActions.updateBooking,
+        (state) => {
+            return {
+                ...state,
+                loading: true
+            };
+        }),
+    on(RestrauntActions.addBookingSuccess, (state, { bookings }) => {
+        const newBooking = [...state.bookings, ...bookings];
+        localStorage.setItem(bookingListKey, JSON.stringify(newBooking));
         return {
             ...state,
-            loading: true
-        };
-    }),
-    on(RestrauntActions.addBookingAppointmentSuccess, (state, { appointments }) => {
-        let newAppointment = [...state.appointments, ...appointments];
-        localStorage.setItem(appointmentListKey, JSON.stringify(newAppointment));
-        return {
-            ...state,
-            appointments: newAppointment,
+            bookings: newBooking,
+            success: BOOKING_ADDED,
             loading: false
         };
     }),
-    on(RestrauntActions.updateBookedAppointmentSuccess, (state, { appointment }) => {
-        let updatedAppointment = state.appointments.map((item) => {
-            if (item.id === appointment.id) {
+    on(RestrauntActions.updateBookingSuccess, (state, { booking }) => {
+        const updatedBooking = state.bookings.map((item) => {
+            if (item.id === booking.id) {
                 return {
                     ...item,
-                    ...appointment
+                    ...booking
                 };
             }
             return item;
         });
-        localStorage.setItem(appointmentListKey, JSON.stringify(updatedAppointment));
+        localStorage.setItem(bookingListKey, JSON.stringify(updatedBooking));
         return {
             ...state,
-            appointments: updatedAppointment,
+            bookings: updatedBooking,
+            success: BOOKING_UPDATED,
             loading: false
         };
     }),
-    on(RestrauntActions.deleteBookedAppointmentSuccess, (state, { id }) => {
-        let updatedAppointments = state.appointments.filter(appointment => appointment.id !== id);
-        localStorage.setItem(appointmentListKey, JSON.stringify(updatedAppointments));
+    on(RestrauntActions.deleteBookingSuccess, (state, { id }) => {
+        const notDeletedBooking = state.bookings.filter(booking => booking.id !== id);
+        localStorage.setItem(bookingListKey, JSON.stringify(notDeletedBooking));
         return {
             ...state,
-            appointments: updatedAppointments,
+            bookings: notDeletedBooking,
+            success: BOOKING_DELETED,
             loading: false
         };
     }),
-    on(RestrauntActions.loadBookingAppointmentFailure,
-        RestrauntActions.addBookingAppointmentFailure, RestrauntActions.updateBookedAppointmentFailure,
-        RestrauntActions.deleteBookedAppointmentFailure, (state, { error }) => ({
+    on(RestrauntActions.loadBookingFailure, RestrauntActions.addBookingFailure,
+        RestrauntActions.updateBookingFailure, RestrauntActions.deleteBookingFailure,
+        (state, { error }) => ({
             ...state,
             error: error,
             loading: false
         }
-    ))
+        )),
+    on(RestrauntActions.resetSuccessMessage, (state) => ({
+        ...state,
+        success: null
+    }))
 );

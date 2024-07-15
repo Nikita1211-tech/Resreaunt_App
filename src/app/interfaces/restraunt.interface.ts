@@ -7,7 +7,7 @@ export interface Restraunt {
     timeSlot: string[]
 }
 
-export interface Appointment {
+export interface Booking {
     id: number;
     restrauntId: number;
     restrauntName: string;

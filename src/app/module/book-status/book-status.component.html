@@ -1,9 +1,8 @@
-<app-navbar></app-navbar>
 <div class="container">
     <div class="container-row2">
-        <h3>Appointments</h3>
+        <h3>Bookings</h3>
         <div class="appointment">
-            <div *ngFor="let list of appointmentList$ | async" class="appointment-container">
+            <div *ngFor="let list of bookingList$ | async" class="appointment-container">
                 <div class="appointment-container-row1">
                     <div>
                         <h6>{{list.restrauntName}}</h6>
@@ -13,14 +12,14 @@
                             [queryParams]="{ bookingId: list.id }">
                             <mat-icon svgIcon="edit-icon" class="edit-icon"></mat-icon>
                         </a>
-                        <button mat-button (click)="deleteAppointment(list.id)">
+                        <button mat-button (click)="deleteBooking(list.id)">
                             <mat-icon svgIcon="delete-icon" class="delete-icon"></mat-icon>
                         </button>
                     </div>
                 </div>
                 <div class="table-data-conatiner">
                     <div>
-                        <p><span>Table Size:</span> {{ list.tableSize }}</p>
+                        <p><span>Table for:</span> {{ list.tableSize }} person</p>
                         <p><span>Table Location:</span> {{ list.tableLoc }}</p>
                     </div>
                     <div>
