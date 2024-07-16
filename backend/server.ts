@@ -1,24 +1,20 @@
-import { Sequelize } from '@sequelize/core';
-import { MsSqlDialect } from '@sequelize/mssql';
+const express = require("express");
+const sql = require("mssql");
+const app = express();
 
-const sequelize = new Sequelize({
-  dialect: MsSqlDialect,
-  server: 'localhost',
-  port: 1433,
-  database: 'database',
-  authentication: {
-    type: 'default',
-    options: {
-      userName: 'username',
-      password: 'password',
-    },
-  },
-});
+// const connectionString = "Server=localhost\\MSSQLSERVER02;Database=Restraunt;Trusted_Connection=True;";
 
-try {
-  if (sequelize) {
-    console.log("Database is up and running");
-  }
-} catch (error) {
-  console.log(error);
+let dbConfig = {
+  server: "localhost\\MSSQLSERVER02",
+  database: "Restraunt",
+  user: "AzureAD\NikitaKumari",
+  password: "Nicky121102%",
+  port: 1433
+};
+
+async function connectDB() {
+  let conn = await new sql.Connection(dbConfig);
+  conn.connect();
 }
+
+connectDB();
