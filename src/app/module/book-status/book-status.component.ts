@@ -29,13 +29,9 @@ export class BookStatusComponent implements OnInit {
   ngOnInit(): void {
     this.restrauntList$ = this.store.select(RestrauntSelectors.selectAllRestraunt);
     this.bookingList$ = this.store.select(RestrauntSelectors.selectAllBookings);
-  }
 
-  // Deletes bookings by id
-  deleteBooking(id: number): void {
-    this.store.dispatch(RestrauntActions.deleteBooking({ id: id }));
-    // Shows confirmation toast after successful deletion 
-    this.store.select(RestrauntSelectors.selectBookingSuccess).subscribe((success) => {
+     // Shows confirmation toast after successful deletion 
+     this.store.select(RestrauntSelectors.selectBookingSuccess).subscribe((success) => {
       switch (success) {
         case BOOKING_DELETED:
           this.restrauntService.openToastSuccess(BOOKING_DELETED, ACTION);
@@ -45,5 +41,10 @@ export class BookStatusComponent implements OnInit {
           return;
       }
     });
+  }
+
+  // Deletes bookings by id
+  deleteBooking(id: number): void {
+    this.store.dispatch(RestrauntActions.deleteBooking({ id: id }));
   }
 }
