@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as RestrauntActions from './../../store/actions/restraunt-list-actions';
 import * as RestrauntSelectors from './../../store/selectors/restraunt-list-selectors';
+import * as BookingSelectors from './../../store/selectors/booking-list-selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -21,12 +22,8 @@ export class BookRestrauntComponent implements OnInit {
   restrauntForm: FormGroup;
   restrauntId!: number;
   appointmentId!: number;
-  bookingList$!: Observable<Booking[]>;
   restrauntList$!: Observable<Restraunt[]>;
-  restrauntName!: string;
-  tableSize!: number[];
-  tableLocation!: string[];
-  timeSlot!: string[];
+  restrauntDetails = <Restraunt>{};
   storedBookingList: Booking[] = [];
   timeIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>'
   minDate!: Date;
@@ -47,7 +44,6 @@ export class BookRestrauntComponent implements OnInit {
   ngOnInit(): void {
     this.restrauntId = Number(this.route.snapshot.params['id']);
     this.bookingId = Number(this.route.snapshot.queryParams['bookingId']);
-    this.bookingList$ = this.store.select(RestrauntSelectors.selectAllBookings);
     this.restrauntList$ = this.store.select(RestrauntSelectors.selectAllRestraunt);
 
     // Date Validator 
@@ -61,39 +57,38 @@ export class BookRestrauntComponent implements OnInit {
     // Filters restraunt name according to id and used in mat checkbox for providing options
     this.restrauntList$.subscribe((value) => {
       if (value) {
-        const filteredRestrauntList = value.find(item => item.id === this.restrauntId);
-        if (filteredRestrauntList) {
-          this.restrauntName = filteredRestrauntList.name;
-          this.tableSize = filteredRestrauntList.tableSize;
-          this.tableLocation = filteredRestrauntList.tableLocation;
-          this.timeSlot = filteredRestrauntList.timeSlot;
+        const currentRestrauntList = value.find(item => item.id === this.restrauntId);
+        if (currentRestrauntList) {
+          this.restrauntDetails.restrauntName = currentRestrauntList.restrauntName;
+          this.restrauntDetails.tableSize = currentRestrauntList.tableSize;
+          this.restrauntDetails.tableLocation = currentRestrauntList.tableLocation;
+          this.restrauntDetails.timeSlot = currentRestrauntList.timeSlot;
         }
       }
     });
 
     // Fetches booking list and assigns id to recently added booking
-    this.bookingList$.subscribe((value) => {
+    this.store.select(BookingSelectors.selectAllBookings).subscribe((value) => {
       this.storedBookingList = value;
-      const filteredRestrauntFormValues = value.find(item => item.id === this.bookingId);
+      const currentBookingList = value.find(item => item.id === this.bookingId);
       if (!this.bookingId && this.storedBookingList.length > 0) {
         this.appointmentId = this.storedBookingList.length + 1;
-        this.storedBookingList.find((value) => {
-          if (this.appointmentId === value.id) {
-            this.appointmentId = this.storedBookingList.length + 2;
-          }
-        })
+        const duplicateAppointmentId = this.storedBookingList.find((value) => (value.id === this.appointmentId));
+        if (duplicateAppointmentId) {
+          this.appointmentId = this.storedBookingList.length + 2;
+        }
       }
       else {
         this.appointmentId = 1;
       };
 
       // Prefill form value according to bookingId
-      if (filteredRestrauntFormValues) {
+      if (currentBookingList) {
         this.restrauntForm.patchValue({
-          tableSize: filteredRestrauntFormValues.tableSize,
-          tableLoc: filteredRestrauntFormValues.tableLoc,
-          date: new Date(filteredRestrauntFormValues.date),
-          time: filteredRestrauntFormValues.time
+          tableSize: currentBookingList.tableSize,
+          tableLoc: currentBookingList.tableLoc,
+          date: new Date(currentBookingList.date),
+          time: currentBookingList.time
         })
       };
     });
@@ -114,7 +109,7 @@ export class BookRestrauntComponent implements OnInit {
         const updatedBooking: Booking = {
           id: this.bookingId,
           restrauntId: this.restrauntId,
-          restrauntName: this.restrauntName,
+          restrauntName: this.restrauntDetails.restrauntName,
           tableSize: restrauntFormValues.tableSize,
           tableLoc: restrauntFormValues.tableLoc,
           date: formatDate(restrauntFormValues.date, 'MM/dd/yyyy', 'en'),
@@ -129,7 +124,7 @@ export class BookRestrauntComponent implements OnInit {
         newBooking.push({
           id: this.appointmentId,
           restrauntId: this.restrauntId,
-          restrauntName: this.restrauntName,
+          restrauntName: this.restrauntDetails.restrauntName,
           tableSize: restrauntFormValues.tableSize,
           tableLoc: restrauntFormValues.tableLoc,
           date: date,
@@ -163,16 +158,16 @@ export class BookRestrauntComponent implements OnInit {
   }
 
   successHandler(): void {
-    this.store.select(RestrauntSelectors.selectBookingSuccess).subscribe((success) => {
+    this.store.select(BookingSelectors.selectBookingSuccess).subscribe((success) => {
       if (success?.length) {
         switch (success) {
           case BOOKING_ADDED:
-            this.router.navigate(['restraunt/BookStatus']);
+            this.router.navigate(['restraunt/Bookings']);
             this.restrauntService.openToastSuccess(BOOKING_ADDED, ACTION);
             this.store.dispatch(RestrauntActions.resetSuccessMessage());
             return;
           case BOOKING_UPDATED:
-            this.router.navigate(['restraunt/BookStatus']);
+            this.router.navigate(['restraunt/Bookings']);
             this.restrauntService.openToastSuccess(BOOKING_UPDATED, ACTION);
             this.store.dispatch(RestrauntActions.resetSuccessMessage());
             return;

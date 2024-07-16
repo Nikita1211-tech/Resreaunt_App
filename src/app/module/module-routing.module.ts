@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookRestrauntComponent } from './book-restraunt/book-restraunt.component';
 import { RestrauntListComponent } from './restraunt-list/restraunt-list.component';
-import { BookStatusComponent } from './book-status/book-status.component';
+import { BookingListComponent } from './booking-list/booking-list.component';
 
 const routes: Routes = [
   {
@@ -14,8 +14,8 @@ const routes: Routes = [
     component: BookRestrauntComponent
   },
   {
-    path: 'BookStatus',
-    component: BookStatusComponent
+    path: 'Bookings',
+    component: BookingListComponent
   },
 ];
 

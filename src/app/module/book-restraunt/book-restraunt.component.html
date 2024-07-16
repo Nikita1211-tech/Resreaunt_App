@@ -2,7 +2,7 @@
   <div class="container-row1" *ngFor="let restraunt of restrauntList$ | async">
     <div class="img-container" *ngIf="restrauntId === restraunt.id">
       <img [src]="restraunt.img" alt="Restraunt image" />
-      <h4>{{ restraunt.name }}</h4>
+      <h4>{{ restraunt.restrauntName }}</h4>
     </div>
   </div>
   <div class="book-restraunt-container">
@@ -10,7 +10,7 @@
       <div class="form-row1">
         <mat-form-field class="form-field">
           <mat-select placeholder="Choose table(s) for" formControlName="tableSize">
-            <mat-option *ngFor="let table of tableSize" [value]="table">
+            <mat-option *ngFor="let table of restrauntDetails.tableSize" [value]="table">
               {{ table }} person
             </mat-option>
           </mat-select>
@@ -20,7 +20,7 @@
         </mat-form-field>
         <mat-form-field class="form-field">
           <mat-select placeholder="Choose location" formControlName="tableLoc">
-            <mat-option *ngFor="let location of tableLocation" [value]="location">
+            <mat-option *ngFor="let location of restrauntDetails.tableLocation" [value]="location">
               {{ location }}
             </mat-option>
           </mat-select>
@@ -42,7 +42,7 @@
         </mat-form-field>
         <mat-form-field class="form-field">
           <mat-select placeholder="Choose slot" formControlName="time">
-            <mat-option *ngFor="let slots of timeSlot" [value]="slots">
+            <mat-option *ngFor="let slots of restrauntDetails.timeSlot" [value]="slots">
               {{ slots }} <mat-icon matPrefix svgIcon="time-icon"></mat-icon>
             </mat-option>
           </mat-select>

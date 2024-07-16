@@ -3,7 +3,7 @@
         <div class="restraunt-container">
             <img [src]="restraunt.img">
             <div class="icon-container">
-                <p>{{ restraunt.name }}</p>
+                <p>{{ restraunt.restrauntName }}</p>
                 <button [routerLink]="['BookAppointment', restraunt.id]" mat-raised-button
                     matTooltip="Book appointment">
                     <mat-icon svgIcon="book-icon"></mat-icon>

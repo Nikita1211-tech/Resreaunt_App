@@ -14,7 +14,7 @@ export class RestrauntService {
   restrauntList: Restraunt[] = [
     {
       id: 1,
-      name: "Aqua Kyota",
+      restrauntName: "Aqua Kyota",
       img: "./../../assets/images/rest_1.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
@@ -22,7 +22,7 @@ export class RestrauntService {
     },
     {
       id: 2,
-      name: "Burger Singh",
+      restrauntName: "Burger Singh",
       img: "./../../assets/images/rest_2.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
@@ -30,7 +30,7 @@ export class RestrauntService {
     },
     {
       id: 3,
-      name: "Panthouse Pizza",
+      restrauntName: "Panthouse Pizza",
       img: "./../../assets/images/rest_3.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],
@@ -38,7 +38,7 @@ export class RestrauntService {
     },
     {
       id: 4,
-      name: "Steuber's",
+      restrauntName: "Steuber's",
       img: "./../../assets/images/rest_4.jpg",
       tableSize: [1, 2, 4, 6],
       tableLocation: ['Left', 'Right', 'Center'],

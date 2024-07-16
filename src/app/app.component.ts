@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as RestrauntActions from './store/actions/restraunt-list-actions';
-import * as RestrauntSelectors from './store/selectors/restraunt-list-selectors';
+import * as BookingSelectors from './store/selectors/booking-list-selectors';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(RestrauntActions.loadRestraunt());
     this.store.dispatch(RestrauntActions.loadBooking());
-    this.loading$ = this.store.select(RestrauntSelectors.selectLoader);
+    this.loading$ = this.store.select(BookingSelectors.selectLoader);
   }
 }

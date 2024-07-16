@@ -16,13 +16,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
-import { BookStatusComponent } from './book-status/book-status.component';
+import { BookingListComponent } from './booking-list/booking-list.component';
 
 @NgModule({
   declarations: [
     RestrauntListComponent,
     BookRestrauntComponent,
-    BookStatusComponent
+    BookingListComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
 export interface Restraunt {
     id: number;
-    name: string;
+    restrauntName: string;
     img: string;
     tableSize: number[];
     tableLocation: string[];
