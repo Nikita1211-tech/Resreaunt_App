@@ -2,7 +2,7 @@
   <div class="container-row1" *ngFor="let restraunt of restrauntList$ | async">
     <div class="img-container" *ngIf="restrauntId === restraunt.id">
       <img [src]="restraunt.img" alt="Restraunt image" />
-      <h4>{{ restraunt.restrauntName }}</h4>
+      <h4>{{ restraunt.restaurantName }}</h4>
     </div>
   </div>
   <div class="book-restraunt-container">

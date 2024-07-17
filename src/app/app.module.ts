@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NavbarComponent } from './common/component/navbar/navbar.component';
 import { bookingReducer } from './store/reducers/booking-list-reducers';
 import { BookingEffects } from './store/effects/booking-list-effects';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { BookingEffects } from './store/effects/booking-list-effects';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     MatProgressSpinnerModule,
     StoreModule.forRoot({ 'restraunt': restrauntReducer, 'booking': bookingReducer}),

@@ -39,7 +39,7 @@ export const bookingReducer = createReducer(initialBookingState,
             };
         }),
     on(RestrauntActions.addBookingSuccess, (state, { bookings }) => {
-        const newBooking = [...state.bookings, ...bookings];
+        const newBooking = [...state.bookings, bookings];
         localStorage.setItem(bookingListKey, JSON.stringify(newBooking));
         return {
             ...state,

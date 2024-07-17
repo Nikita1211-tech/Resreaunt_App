@@ -1,20 +1,22 @@
 const express = require("express");
-const sql = require("mssql");
+const cors = require("cors");
+import bodyParser from "body-parser";
+import restaurantRoutes from "./src/routes/restaurant-routes";
+
 const app = express();
+app.use(express.json());
+app.use(bodyParser.json());
 
-// const connectionString = "Server=localhost\\MSSQLSERVER02;Database=Restraunt;Trusted_Connection=True;";
+app.use(
+  cors({
+    origin: [
+      "http://localhost:4200",
+      "*",
+    ],
+  })
+);
+app.use("/restaurant", restaurantRoutes);
 
-let dbConfig = {
-  server: "localhost\\MSSQLSERVER02",
-  database: "Restraunt",
-  user: "AzureAD\NikitaKumari",
-  password: "Nicky121102%",
-  port: 1433
-};
-
-async function connectDB() {
-  let conn = await new sql.Connection(dbConfig);
-  conn.connect();
-}
-
-connectDB();
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});

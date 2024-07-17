@@ -1,10 +1,17 @@
 export interface Restraunt {
     id: number;
-    restrauntName: string;
+    restaurantName: string;
     img: string;
-    tableSize: number[];
+    tableSize: string;
+    tableLocation: string;
+    timeSlot: string
+}
+
+export interface RestaurantDetails {
+    restaurantName: string;
+    tableSize:  string[];
     tableLocation: string[];
-    timeSlot: string[]
+    timeSlot: string[];
 }
 
 export interface Booking {

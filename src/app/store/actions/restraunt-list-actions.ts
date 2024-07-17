@@ -21,8 +21,8 @@ export const loadBookingSuccess = createAction(LOAD_BOOKING_SUCCESS, props<{ boo
 export const loadBookingFailure = createAction(LOAD_BOOKING_FAILURE, props<{ error: string }>());
 
 // Booking list add action 
-export const addBooking = createAction(ADD_BOOKING, props<{ bookings: Booking[] }>());
-export const addBookingSuccess = createAction(ADD_BOOKING_SUCCESS, props<{ bookings: Booking[] }>());
+export const addBooking = createAction(ADD_BOOKING, props<{ bookings: Booking }>());
+export const addBookingSuccess = createAction(ADD_BOOKING_SUCCESS, props<{ bookings: Booking }>());
 export const addBookingFailure = createAction(ADD_BOOKING_FAILURE, props<{ error: string }>());
 
 // Booking list delete action  

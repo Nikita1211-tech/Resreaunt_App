@@ -32,7 +32,7 @@ export class BookingEffects {
     switchMap(({ bookings }) =>
       this.restrauntService.addBooking(bookings).pipe(
         delay(1000),
-        map((addedBooking: Booking[]) =>
+        map((addedBooking: Booking) =>
           RestrauntActions.addBookingSuccess({ bookings: addedBooking })
         ),
         catchError((error: { message: string }) =>
