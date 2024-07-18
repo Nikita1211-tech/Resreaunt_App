@@ -5,10 +5,10 @@
             <div *ngFor="let list of bookingList$ | async" class="appointment-container">
                 <div class="appointment-container-row1">
                     <div>
-                        <h6>{{list.restrauntName}}</h6>
+                        <h6>{{list.restaurantName}}</h6>
                     </div>
                     <div class="appointment-actions-container">
-                        <a [routerLink]="['/restraunt/BookAppointment', list.restrauntId]"
+                        <a [routerLink]="['/restraunt/BookAppointment', list.restaurantId]"
                             [queryParams]="{ bookingId: list.id }">
                             <mat-icon svgIcon="edit-icon" class="edit-icon"></mat-icon>
                         </a>

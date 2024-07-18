@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ACTION, BOOKING_ADDED, BOOKING_UPDATED, NO_BOOKING_AVAILABLE } from '../../enum/localStorage-enum';
+import { ACTION, BOOKING_ADDED, BOOKING_UPDATED, NO_BOOKING_AVAILABLE } from '../../enum/messages-enum';
 import { RestrauntService } from '../../services/restraunt.service';
 import { formatDate } from '@angular/common';
 
@@ -21,7 +21,6 @@ import { formatDate } from '@angular/common';
 export class BookRestrauntComponent implements OnInit {
   restrauntForm: FormGroup;
   restrauntId!: number;
-  appointmentId!: number;
   restrauntList$!: Observable<Restraunt[]>;
   restrauntDetails = <RestaurantDetails>{};
   storedBookingList: Booking[] = [];
@@ -56,7 +55,6 @@ export class BookRestrauntComponent implements OnInit {
 
     // Filters restraunt name according to id and used in mat checkbox for providing options
     this.restrauntList$.subscribe((value) => {
-      console.log(value);
       if (value) {
         const currentRestrauntList = value.find(item => item.id === this.restrauntId);
         if (currentRestrauntList) {
@@ -72,16 +70,6 @@ export class BookRestrauntComponent implements OnInit {
     this.store.select(BookingSelectors.selectAllBookings).subscribe((value) => {
       this.storedBookingList = value;
       const currentBookingList = value.find(item => item.id === this.bookingId);
-      if (!this.bookingId && this.storedBookingList.length > 0) {
-        this.appointmentId = this.storedBookingList.length + 1;
-        const duplicateAppointmentId = this.storedBookingList.find((value) => (value.id === this.appointmentId));
-        if (duplicateAppointmentId) {
-          this.appointmentId = this.storedBookingList.length + 2;
-        }
-      }
-      else {
-        this.appointmentId = 1;
-      };
 
       // Prefill form value according to bookingId
       if (currentBookingList) {
@@ -109,8 +97,8 @@ export class BookRestrauntComponent implements OnInit {
       if (this.bookingId) {
         const updatedBooking: Booking = {
           id: this.bookingId,
-          restrauntId: this.restrauntId,
-          restrauntName: this.restrauntDetails.restaurantName,
+          restaurantId: this.restrauntId,
+          restaurantName: this.restrauntDetails.restaurantName,
           tableSize: restrauntFormValues.tableSize,
           tableLoc: restrauntFormValues.tableLoc,
           date: formatDate(restrauntFormValues.date, 'MM/dd/yyyy', 'en'),
@@ -122,23 +110,13 @@ export class BookRestrauntComponent implements OnInit {
         let alreadyExists: boolean = false;
         const date = formatDate(restrauntFormValues.date, 'MM/dd/yyyy', 'en');
         const newBooking: Booking = {
-          id: this.appointmentId,
-          restrauntId: this.restrauntId,
-          restrauntName: this.restrauntDetails.restaurantName,
+          restaurantId: this.restrauntId,
+          restaurantName: this.restrauntDetails.restaurantName,
           tableSize: restrauntFormValues.tableSize,
           tableLoc: restrauntFormValues.tableLoc,
           date: date,
           time: restrauntFormValues.time
         };
-        // newBooking.push({
-        //   id: this.appointmentId,
-        //   restrauntId: this.restrauntId,
-        //   restrauntName: this.restrauntDetails.restaurantName,
-        //   tableSize: restrauntFormValues.tableSize,
-        //   tableLoc: restrauntFormValues.tableLoc,
-        //   date: date,
-        //   time: restrauntFormValues.time
-        // });
 
         // Checks whether past bookings are present in list or not 
         if (this.storedBookingList.length > 0) {
@@ -163,7 +141,7 @@ export class BookRestrauntComponent implements OnInit {
 
   // Dispatches add book action 
   addBooking(newBooking: Booking): void {
-    this.store.dispatch(RestrauntActions.addBooking({ bookings: newBooking }));
+    this.store.dispatch(RestrauntActions.addBooking({ booking: newBooking }));
   }
 
   successHandler(): void {
@@ -172,11 +150,13 @@ export class BookRestrauntComponent implements OnInit {
         switch (success) {
           case BOOKING_ADDED:
             this.router.navigate(['restraunt/Bookings']);
+            this.store.dispatch(RestrauntActions.loadBooking());
             this.restrauntService.openToastSuccess(BOOKING_ADDED, ACTION);
             this.store.dispatch(RestrauntActions.resetSuccessMessage());
             return;
           case BOOKING_UPDATED:
             this.router.navigate(['restraunt/Bookings']);
+            this.store.dispatch(RestrauntActions.loadBooking());
             this.restrauntService.openToastSuccess(BOOKING_UPDATED, ACTION);
             this.store.dispatch(RestrauntActions.resetSuccessMessage());
             return;

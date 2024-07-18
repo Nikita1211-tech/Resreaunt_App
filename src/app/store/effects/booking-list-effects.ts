@@ -15,7 +15,7 @@ export class BookingEffects {
     ofType(RestrauntActions.loadBooking),
     switchMap(() =>
       this.restrauntService.getBookingList().pipe(
-        delay(1000),
+        // delay(1000),
         map((booking: Booking[]) =>
           RestrauntActions.loadBookingSuccess({ booking })
         ),
@@ -29,11 +29,11 @@ export class BookingEffects {
   // Adds new booking in booking list
   addBooking$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.addBooking),
-    switchMap(({ bookings }) =>
-      this.restrauntService.addBooking(bookings).pipe(
-        delay(1000),
-        map((addedBooking: Booking) =>
-          RestrauntActions.addBookingSuccess({ bookings: addedBooking })
+    switchMap(({ booking }) =>
+      this.restrauntService.addBooking(booking).pipe(
+        // delay(1000),
+        map((booking) =>
+          RestrauntActions.addBookingSuccess({ booking })
         ),
         catchError((error: { message: string }) =>
           of(RestrauntActions.addBookingFailure({ error: error.message }))
@@ -46,7 +46,7 @@ export class BookingEffects {
   deleteBooking$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.deleteBooking),
     switchMap(({ id }) => this.restrauntService.deleteBooking(id).pipe(
-      delay(1000),
+      // delay(1000),
       map((res: number) => RestrauntActions.deleteBookingSuccess({ id: res }))
     )),
     catchError((error: { message: string }) => of(
@@ -58,7 +58,7 @@ export class BookingEffects {
   updateBooking$ = createEffect(() => this.action$.pipe(
     ofType(RestrauntActions.updateBooking),
     switchMap(({ booking }) => this.restrauntService.updateBooking(booking).pipe(
-      delay(1000),
+      // delay(1000),
       map((res: Booking) => RestrauntActions.updateBookingSuccess({ booking: res }))
     )),
     catchError((error: { message: string }) => of(

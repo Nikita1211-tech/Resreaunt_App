@@ -15,9 +15,9 @@ export interface RestaurantDetails {
 }
 
 export interface Booking {
-    id: number;
-    restrauntId: number;
-    restrauntName: string;
+    id?: number;
+    restaurantId: number;
+    restaurantName: string;
     tableSize: string;
     tableLoc: string;
     date: string;

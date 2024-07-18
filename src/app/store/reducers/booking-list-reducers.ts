@@ -1,7 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
 import { Booking } from "../../interfaces/restraunt.interface";
 import * as RestrauntActions from './../actions/restraunt-list-actions';
-import { BOOKING_ADDED, BOOKING_DELETED, BOOKING_UPDATED, bookingListKey } from "../../enum/localStorage-enum";
+import { BOOKING_ADDED, BOOKING_DELETED, BOOKING_UPDATED } from "../../enum/messages-enum";
+import { ADD_BOOKING } from "../../enum/state-enum";
 
 export interface BookingState {
     bookings: Booking[];
@@ -38,40 +39,23 @@ export const bookingReducer = createReducer(initialBookingState,
                 loading: true
             };
         }),
-    on(RestrauntActions.addBookingSuccess, (state, { bookings }) => {
-        const newBooking = [...state.bookings, bookings];
-        localStorage.setItem(bookingListKey, JSON.stringify(newBooking));
+    on(RestrauntActions.addBookingSuccess, (state, { booking }) => {
         return {
             ...state,
-            bookings: newBooking,
-            success: BOOKING_ADDED,
+            success: ADD_BOOKING,
             loading: false
         };
     }),
     on(RestrauntActions.updateBookingSuccess, (state, { booking }) => {
-        const updatedBooking = state.bookings.map((item) => {
-            if (item.id === booking.id) {
-                return {
-                    ...item,
-                    ...booking
-                };
-            }
-            return item;
-        });
-        localStorage.setItem(bookingListKey, JSON.stringify(updatedBooking));
         return {
             ...state,
-            bookings: updatedBooking,
             success: BOOKING_UPDATED,
             loading: false
         };
     }),
     on(RestrauntActions.deleteBookingSuccess, (state, { id }) => {
-        const notDeletedBooking = state.bookings.filter(booking => booking.id !== id);
-        localStorage.setItem(bookingListKey, JSON.stringify(notDeletedBooking));
         return {
             ...state,
-            bookings: notDeletedBooking,
             success: BOOKING_DELETED,
             loading: false
         };

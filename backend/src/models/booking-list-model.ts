@@ -2,11 +2,11 @@ import { sequelize } from "../../dbconfig";
 import { IBooking, IRestaurant } from "../interfaces/restaurant-interface";
 import { DataTypes, Model, Optional } from "sequelize";
 
-interface IBookingAttributes extends Optional<IBooking, "id"> {}
+interface IBookingAttributes extends Optional<IBooking, "id"> { }
 
 interface IBookingInstance extends Model<IBooking, IBookingAttributes>, IBooking {
-  createdAt?: Date;
-  updatedAt?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 const Booking = sequelize.define<IBookingInstance>("Booking_List", {
@@ -22,7 +22,6 @@ const Booking = sequelize.define<IBookingInstance>("Booking_List", {
     restaurantName: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     tableSize: {
         type: DataTypes.INTEGER,
@@ -42,8 +41,6 @@ const Booking = sequelize.define<IBookingInstance>("Booking_List", {
     }
 })
 
-Booking.sync({ force: false }).then(() => {
-  console.log("Table made");
-});
+Booking.sync({ force: false }).then(() => { });
 
 export { Booking }
