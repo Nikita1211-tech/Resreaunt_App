@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ACTION, BOOKING_ADDED, BOOKING_UPDATED, NO_BOOKING_AVAILABLE } from '../../enum/messages-enum';
+import { ACTION, BOOKING_ADDED, BOOKING_UPDATED, NO_BOOKING_AVAILABLE, RESTAURANT_BOOKING_UNSUCCESSFUL, RESTAURANT_UPDATION_UNSUCCESSFUL } from '../../enum/messages-enum';
 import { RestrauntService } from '../../services/restraunt.service';
 import { formatDate } from '@angular/common';
 
@@ -84,6 +84,7 @@ export class BookRestrauntComponent implements OnInit {
 
     // Handles success case 
     this.successHandler();
+    this.errorHandler();
   }
 
   // Submits form data 
@@ -146,7 +147,7 @@ export class BookRestrauntComponent implements OnInit {
 
   successHandler(): void {
     this.store.select(BookingSelectors.selectBookingSuccess).subscribe((success) => {
-      if (success?.length) {
+      if (success) {
         switch (success) {
           case BOOKING_ADDED:
             this.router.navigate(['restraunt/Bookings']);
@@ -166,4 +167,24 @@ export class BookRestrauntComponent implements OnInit {
       }
     });
   }
+
+  errorHandler(): void {
+    this.store.select(BookingSelectors.selectBookingError).subscribe((error) => {
+      if (error) {
+        switch (error) {
+          case RESTAURANT_BOOKING_UNSUCCESSFUL:
+            this.restrauntService.openToastSuccess(RESTAURANT_BOOKING_UNSUCCESSFUL, ACTION);
+            this.store.dispatch(RestrauntActions.resetErrorMessage());
+            return;
+          case RESTAURANT_UPDATION_UNSUCCESSFUL:
+            this.restrauntService.openToastSuccess(RESTAURANT_UPDATION_UNSUCCESSFUL, ACTION);
+            this.store.dispatch(RestrauntActions.resetErrorMessage());
+            return;
+          default:
+            return;
+        }
+      }
+    });
+  }
 }
+

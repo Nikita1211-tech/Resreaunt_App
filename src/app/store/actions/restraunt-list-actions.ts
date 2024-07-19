@@ -2,7 +2,7 @@ import { createAction, props } from "@ngrx/store";
 import {
     ADD_BOOKING, ADD_BOOKING_FAILURE, ADD_BOOKING_SUCCESS, DELETE_BOOKING, DELETE_BOOKING_FAILURE,
     DELETE_BOOKING_SUCCESS, LOAD_BOOKING, LOAD_BOOKING_FAILURE, LOAD_BOOKING_SUCCESS, LOAD_RESTRAUNT,
-    LOAD_RESTRAUNT_FAILURE, LOAD_RESTRAUNT_SUCCESS, LOAD_SPINNER, RESET_SUCCESS, UPDATE_BOOKING,
+    LOAD_RESTRAUNT_FAILURE, LOAD_RESTRAUNT_SUCCESS, LOAD_SPINNER, RESET_ERROR_MESSAGE, RESET_SUCCESS, UPDATE_BOOKING,
     UPDATE_BOOKING_FAILURE, UPDATE_BOOKING_SUCCESS
 } from "../../enum/state-enum";
 import { Booking, Restraunt } from "../../interfaces/restraunt.interface";
@@ -37,3 +37,4 @@ export const updateBookingFailure = createAction(UPDATE_BOOKING_FAILURE, props<{
 
 // Resets success message action
 export const resetSuccessMessage = createAction(RESET_SUCCESS);
+export const resetErrorMessage = createAction(RESET_ERROR_MESSAGE);

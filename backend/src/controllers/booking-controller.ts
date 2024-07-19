@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Booking } from "../models/booking-list-model";
-import { BOOKING_ADDED, BOOKING_DELETED, BOOKING_NOT_FOUND, BOOKING_UPDATED, INTERNAL_SERVER_ERROR, RESTAURANT_BOOKING_ERROR } from "../enum/booking-enum";
+import { BOOKING_ADDED, BOOKING_DELETED, BOOKING_NOT_FOUND, BOOKING_UPDATED, RESTAURANT_BOOKING_ERROR, RESTAURANT_BOOKING_UNSUCCESSFUL, RESTAURANT_DELETION_UNSUCCESSFUL, RESTAURANT_UPDATION_UNSUCCESSFUL } from "../enum/booking-enum";
 
 // Fetches ooking list from database 
 const getBookingList = async (req: Request, res: Response) => {
@@ -36,7 +36,7 @@ const addBooking = async (req: Request, res: Response) => {
             return res.status(401).json({ error: RESTAURANT_BOOKING_ERROR });
         }
     } catch (error) {
-        return res.status(400).json({ error: INTERNAL_SERVER_ERROR });
+        return res.status(400).json({ error: RESTAURANT_BOOKING_UNSUCCESSFUL });
     }
 }
 
@@ -65,7 +65,7 @@ const updateBooking = async(req: Request, res: Response) => {
             return res.status(404).json({error: BOOKING_NOT_FOUND});
         }
     } catch (error) {
-        return res.status(500).json({error: INTERNAL_SERVER_ERROR});
+        return res.status(500).json({error: RESTAURANT_UPDATION_UNSUCCESSFUL});
     }
 }
 
@@ -82,7 +82,7 @@ const deleteBooking = async(req: Request, res: Response) => {
             return res.status(404).json({error: BOOKING_NOT_FOUND});
         }
     } catch (error) {
-         return res.status(500).json({error: INTERNAL_SERVER_ERROR});
+         return res.status(500).json({error: RESTAURANT_DELETION_UNSUCCESSFUL});
     }
 }
 

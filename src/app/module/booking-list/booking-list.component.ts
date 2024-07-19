@@ -7,7 +7,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as BookingActions from './../../store/actions/restraunt-list-actions';
 import * as BookingSelectors from './../../store/selectors/booking-list-selectors';
-import { ACTION, BOOKING_DELETED } from '../../enum/messages-enum';
+import { ACTION, BOOKING_DELETED, RESTAURANT_DELETION_UNSUCCESSFUL } from '../../enum/messages-enum';
 
 @Component({
   selector: 'app-booking-list',
@@ -36,6 +36,18 @@ export class BookingListComponent {
           this.store.dispatch(BookingActions.loadBooking());
           this.restrauntService.openToastSuccess(BOOKING_DELETED, ACTION);
           this.store.dispatch(BookingActions.resetSuccessMessage());
+          return;
+        default:
+          return;
+      }
+    });
+
+    this.store.select(BookingSelectors.selectBookingError).subscribe((error) => {
+      switch (error) {
+        case RESTAURANT_DELETION_UNSUCCESSFUL:
+          this.store.dispatch(BookingActions.loadBooking());
+          this.restrauntService.openToastSuccess(RESTAURANT_DELETION_UNSUCCESSFUL, ACTION);
+          this.store.dispatch(BookingActions.resetErrorMessage());
           return;
         default:
           return;

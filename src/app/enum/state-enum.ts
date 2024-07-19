@@ -3,6 +3,7 @@ export const LOAD_SPINNER: string = "[Load] Load spinner";
 
 // Resets success message after successful action 
 export const RESET_SUCCESS: string = "[Booking] Reset success message";
+export const RESET_ERROR_MESSAGE: string = "[Booking] Reset error message";
 
 // Restraunt list enums 
 export const LOAD_RESTRAUNT: string = "[Restraunt] Load restarunt list";

@@ -4,6 +4,7 @@ import * as RestrauntActions from './../actions/restraunt-list-actions';
 import { catchError, delay, map, of, switchMap } from "rxjs";
 import { RestrauntService } from "../../services/restraunt.service";
 import { Booking } from "../../interfaces/restraunt.interface";
+import { RESTAURANT_BOOKING_UNSUCCESSFUL, RESTAURANT_DELETION_UNSUCCESSFUL, RESTAURANT_UPDATION_UNSUCCESSFUL } from "../../enum/messages-enum";
 
 @Injectable()
 export class BookingEffects {
@@ -35,8 +36,8 @@ export class BookingEffects {
         map((booking) =>
           RestrauntActions.addBookingSuccess({ booking })
         ),
-        catchError((error: { message: string }) =>
-          of(RestrauntActions.addBookingFailure({ error: error.message }))
+        catchError((error) =>
+          of(RestrauntActions.addBookingFailure({ error: RESTAURANT_BOOKING_UNSUCCESSFUL }))
         )
       )
     )
@@ -50,7 +51,7 @@ export class BookingEffects {
       map((res: number) => RestrauntActions.deleteBookingSuccess({ id: res }))
     )),
     catchError((error: { message: string }) => of(
-      RestrauntActions.deleteBookingFailure({ error: error.message })
+      RestrauntActions.deleteBookingFailure({ error: RESTAURANT_DELETION_UNSUCCESSFUL })
     ))
   ));
 
@@ -62,7 +63,7 @@ export class BookingEffects {
       map((res: Booking) => RestrauntActions.updateBookingSuccess({ booking: res }))
     )),
     catchError((error: { message: string }) => of(
-      RestrauntActions.updateBookingFailure({ error: error.message })
+      RestrauntActions.updateBookingFailure({ error: RESTAURANT_UPDATION_UNSUCCESSFUL })
     ))
   ));
 }

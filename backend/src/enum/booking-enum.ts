@@ -5,6 +5,8 @@ export const BOOKING_DELETED: string = "Booking deleted successfully";
 
 // Error messages 
 export const RESTAURANT_BOOKING_ERROR: string = "Error while booking restaurant";
+export const RESTAURANT_BOOKING_UNSUCCESSFUL: string = "Restaurant booking unsuccessful";
+export const RESTAURANT_UPDATION_UNSUCCESSFUL: string = "Booking updation unsuccessful";
+export const RESTAURANT_DELETION_UNSUCCESSFUL: string = "Booking deletion unsuccessful";
 export const BOOKING_NOT_FOUND: string = "No booking found";
 export const NO_BOOKING_AVAILABLE: string = "Booking not available";
-export const INTERNAL_SERVER_ERROR: string = "Interbal servere error";

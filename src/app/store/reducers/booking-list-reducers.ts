@@ -71,5 +71,9 @@ export const bookingReducer = createReducer(initialBookingState,
     on(RestrauntActions.resetSuccessMessage, (state) => ({
         ...state,
         success: null
+    })),
+    on(RestrauntActions.resetErrorMessage, (state) => ({
+        ...state,
+        error: null
     }))
 );
