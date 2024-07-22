@@ -10,9 +10,10 @@ const getBookingList = async (req: Request, res: Response) => {
            return res.status(200).json(bookingList);
         }
         else {
-            // return res.status(401).json({ error: "No bookings available" });
+            return res.status(401).json({ error: "No bookings available" });
         }
     } catch (error) {
+        console.log(error)
         return res.status(400).json({ error: error });
     }
 }

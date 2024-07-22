@@ -1,11 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-import bodyParser from "body-parser";
 import restaurantRoutes from "./src/routes/restaurant-routes";
 
 const app = express();
 app.use(express.json());
-app.use(bodyParser.json());
 
 app.use(
   cors({
